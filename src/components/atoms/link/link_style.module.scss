@@ -1,0 +1,12 @@
+@import '../../../theme/colors.module.scss';
+
+.anchor{
+    color: $red;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.anchor:hover{
+    text-decoration: underline;
+
+}

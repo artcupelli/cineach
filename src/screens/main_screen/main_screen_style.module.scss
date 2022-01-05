@@ -1,0 +1,26 @@
+@import "../../theme/colors.module.scss";
+
+.screen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0
+}
+
+.container{
+    flex-direction: row;
+    display: flex;
+    height: 99%;
+    max-width: 99vw;
+}
+
+.routes_container {
+    margin-left: 80px;
+    display: flex;
+    flex: 1;
+}

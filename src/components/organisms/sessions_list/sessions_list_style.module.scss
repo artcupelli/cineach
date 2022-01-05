@@ -1,0 +1,11 @@
+.container {
+    margin: 15px 0;
+
+    .sessions_container {
+        margin: 10px 0 0 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: stretch;
+    }
+}

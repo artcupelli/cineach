@@ -1,0 +1,43 @@
+@import "../../../theme/colors.module.scss";
+
+.container {
+    display: flex;
+    // flex: 1;
+    flex-direction: row;
+    border: 1px solid $red;
+    padding: 10px;
+    border-radius: 20px;
+    justify-content: space-between;
+    margin:0 10px 5px 0;
+    transition: all 0.5s;
+    min-width: fit-content;
+
+    .left_container {
+        flex: 3;
+    }
+
+    .right_container {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 100px;
+        min-width: max-content;
+
+        p {
+            margin-left: 15px !important;
+        }
+    
+    }
+}
+
+.container:hover {
+    background-color: $red;
+    transition: all 0.5s;
+    color: white !important;
+
+    div p {
+        color: white !important;
+    }
+
+}

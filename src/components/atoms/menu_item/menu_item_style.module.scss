@@ -1,0 +1,29 @@
+@import "../../../theme/colors.module.scss";
+
+%default_container {
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.container {
+    @extend %default_container;
+    transition: 0.4s all;
+}
+
+.container_selected {
+    @extend %default_container;
+    border-left: 2px solid $red;
+}
+
+.container:hover{
+    background-color: $red;
+    border-radius: 10px;
+    transition: 0.4s all;
+}
+
+.icon {
+    color: blue
+}

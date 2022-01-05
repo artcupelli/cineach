@@ -1,0 +1,1 @@
+export {default as LoggedRoutes} from './logged_routes';
