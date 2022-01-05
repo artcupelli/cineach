@@ -13,14 +13,16 @@ const SubtileTextCard: React.FC<SubtitleTextCardProps> = ({ rightSubtitle, subti
     return (
         <div className={styles['container']}>
 
+            <div className={styles['right_detail']}/>
+
             <div>
                 <Subtitle color={Colors.white}>{subtitle}</Subtitle>
                 <Text fontWeight={200} color={Colors.white}>{text}</Text>
             </div>
 
-            <div>  </div>
-
-            <div>  </div>
+            <div>
+                <Subtitle color={Colors.white} >{rightSubtitle}</Subtitle>
+            </div>
 
         </div>
     );

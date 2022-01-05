@@ -7,6 +7,7 @@
     display: flex;
     border-radius: 15px 15px 0 15px;
     margin: 0 20px 10px 0;
+    transition: all 1s;
 
     .gradient_container {
         background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(121, 9, 9, 0) 55%, rgba(255, 0, 0, 0) 100%);
@@ -30,6 +31,9 @@
 }
 
 .container:hover {
+    min-width: 50%;
+    transition: all 1s;
+
     .gradient_container {
         background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(121, 9, 9, 0) 55%, red);
         transition: all 0.5s;

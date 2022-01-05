@@ -4,4 +4,11 @@
     background-color: $red;
     display: flex;
     flex-direction: row;
+    border-radius: 15px;
+    padding: 10px;
+
+    .right_detail {
+        width: 10px;
+        height: 90%;
+    }
 }

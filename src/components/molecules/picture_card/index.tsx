@@ -13,7 +13,7 @@ import styles from './picture_card_styles.module.scss';
 import { Icons } from '../../../theme/icons';
 
 
-const PictureCard: React.FC<PictureCardProps> = ({ description, title, pictureUrl }) => {
+const PictureCard: React.FC<PictureCardProps> = ({ description, title, pictureUrl, animation = true }) => {
     return (
         <div
             className={styles['container']}
@@ -27,7 +27,6 @@ const PictureCard: React.FC<PictureCardProps> = ({ description, title, pictureUr
                 <div className={styles['text_container']}>
                     <Subtitle color={Colors.white}>{title}</Subtitle>
                     <Text>{description}</Text>
-
                 </div>
             </div>
         </div>
