@@ -1,0 +1,84 @@
+.container{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex: 1;
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
+    
+}
+.container:hover{
+    .picture{
+        width: 250px;
+        .text_container {
+            opacity: 0;
+            transition: all 0.3s;
+        }
+    }
+    .sessions_container{
+        display:flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        transition: all 1s;
+        opacity: 0;
+        animation-name: fadeIn;
+        animation-duration: 1s;
+        animation-delay: 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        overflow-y: auto;
+        div{
+            width: 80%;
+            cursor: pointer;
+            
+        }
+        h2{
+            margin-bottom: 20px;
+        }
+    }
+}
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 100%;
+    }
+}
+.sessions_container{
+    display: none;
+    width: 0px;
+    transition: all 1s;
+}
+.picture {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+    display: flex;
+    border-radius: 15px 15px 0 15px;
+    margin: 0 0px 10px 0;
+    transition: all 1s;
+
+    .gradient_container {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(121, 9, 9, 0) 55%, rgba(255, 0, 0, 0) 100%);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        border-radius: 15px 15px 0 15px;
+        transition: all 0.5s;
+
+        .text_container {
+            padding: 20px;
+            transition: all 1s;
+        }
+        
+    }
+}
+

@@ -1,0 +1,11 @@
+.container{
+    flex: 1;
+    flex-direction: column;
+    
+}
+.sessions_container{
+    margin-top: 20px;
+    height: 90%;
+    width: 100%;
+    overflow: scroll;
+}
