@@ -1,5 +1,5 @@
 export default interface HeaderProps {
     title : string,
-    outline?: boolean,
+    date?: boolean,
     icon?: string
 }

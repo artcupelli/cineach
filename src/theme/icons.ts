@@ -7,7 +7,9 @@ import {
     mdilMessageImage,
     mdilPencil,
     mdilPlus,
-    mdilLogin
+    mdilLogin,
+    mdilDelete,
+    mdilMinus
 } from '@mdi/light-js';
 
 
@@ -20,5 +22,7 @@ export const Icons = {
     user: mdilAccount,
     film: mdilMessageImage,
     edit: mdilPencil,
-    add: mdilPlus
+    add: mdilPlus,
+    trash: mdilDelete,
+    minus: mdilMinus
 }

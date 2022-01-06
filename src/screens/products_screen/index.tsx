@@ -12,7 +12,11 @@ import SubtileTextCard from '../../components/molecules/subtile_text_card';
 const ProductsScreen: React.FC = () => {
   return (
     <div className={styles['container']}>
-      <Header title='Produtos' outline icon={Icons.product} />
+
+      <Header
+        title='Produtos'
+        icon={Icons.product}
+      />
 
       <div className={styles['products_container']}>
         <SubtileTextCard
@@ -93,8 +97,8 @@ const ProductsScreen: React.FC = () => {
           rightSubtitle='R$ 17.90'
         />
 
-        
-        
+
+
       </div>
     </div>
   );

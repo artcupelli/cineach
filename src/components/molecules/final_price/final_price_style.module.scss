@@ -1,0 +1,18 @@
+@import '../../../theme/colors.module.scss';
+
+.container, .price_container{
+    display: flex;
+    flex-direction: row;
+}
+
+.container{
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray;
+    padding: 15px 0;
+}
+
+.price_container {
+    align-items: baseline;
+}

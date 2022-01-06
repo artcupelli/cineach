@@ -4,3 +4,5 @@ export { default as Title } from './title';
 export { default as Text } from './text';
 export { default as Link } from './link';
 export { default as ProfilePic } from './profile_pic';
+export { default as Button } from './button';
+export { default as Detail } from './detail';

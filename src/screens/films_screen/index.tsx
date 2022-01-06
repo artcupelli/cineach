@@ -10,7 +10,11 @@ import { Icons } from '../../theme/icons';
 const FilmsScreen: React.FC = () => {
   return (
     <div className={styles['container']}>
-      <Header title='Filmes' outline icon={Icons.film} />
+      
+      <Header
+        title='Filmes'
+        icon={Icons.film}
+      />
 
       <div className={styles['films_container']}>
         <PictureCard

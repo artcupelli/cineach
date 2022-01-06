@@ -1,22 +1,21 @@
-import Icon from '@mdi/react';
-
 import React from 'react';
 
 import { Colors } from '../../../theme/colors';
 
-import { Subtitle, Text } from '../../atoms';
+import { Subtitle } from '../../atoms';
 
 import SessionCardProps from './session_card_props';
 
 import styles from './session_card_styles.module.scss';
 
-import { Icons } from '../../../theme/icons';
-
 import { OutlineCard } from '..';
 
-const SessionCard: React.FC<SessionCardProps> = ({title, pictureUrl, animation = true }) => {
+
+const SessionCard: React.FC<SessionCardProps> = ({ title, pictureUrl, animation = true }) => {
+
     return (
         <div className={styles['container']}>
+
             <div className={styles['picture']} style={{ backgroundImage: 'url(' + pictureUrl + ')' }}>
                 <div className={styles['gradient_container']}>
                     <div className={styles['text_container']}>
@@ -24,6 +23,7 @@ const SessionCard: React.FC<SessionCardProps> = ({title, pictureUrl, animation =
                     </div>
                 </div>
             </div>
+
             <div className={styles['sessions_container']}>
                 <Subtitle color={Colors.red}>{title}</Subtitle>
                 <OutlineCard

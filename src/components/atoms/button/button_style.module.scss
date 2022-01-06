@@ -1,0 +1,22 @@
+@import "../../../theme/colors.module.scss";
+
+.container {
+    border: 1px solid transparent;
+    transition: all 0.5s;
+    background-color: $red;
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.container:hover {
+    border: 1px solid $red;
+    transition: all 0.5s;
+    background-color: transparent;
+    cursor: pointer;
+}
+

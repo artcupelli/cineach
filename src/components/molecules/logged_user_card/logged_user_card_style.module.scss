@@ -11,8 +11,9 @@
         flex: 4;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
         align-items: flex-end;
+        height: 45px;
     }
 
     .pic_container, .icon_container{
@@ -21,6 +22,10 @@
 
     .pic_container{
         margin-left: 15px ;
+    }
+
+    .icon_container{
+        cursor: pointer;
     }
 
 

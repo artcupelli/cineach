@@ -21,7 +21,7 @@ const PictureCard: React.FC<PictureCardProps> = ({ description, title, pictureUr
         >
             <div className={styles['gradient_container']}>
                 <div className={styles['add_container']}>
-                    <Icon path={Icons.add} size={2} color={Colors. white}/>
+                    <Icon path={Icons.add} size={2} color={Colors.white}/>
                 </div>
 
                 <div className={styles['text_container']}>

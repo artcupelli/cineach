@@ -10,14 +10,12 @@ import styles from './header_style.module.scss';
 
 import { Colors } from '../../../theme/colors';
 
-import YellowMonster from '../../../assets/images/yellow_monster.png';
+import { Icons } from '../../../theme/icons';
 
 import Icon from '@mdi/react';
 
-import { Icons } from '../../../theme/icons';
 
-
-const Header: React.FC<HeaderProps> = ({ title, outline = false, icon = Icons.product }) => {
+const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '' }) => {
     const today = moment();
 
     const mapMonths: { [id: number]: string } = {
@@ -35,31 +33,27 @@ const Header: React.FC<HeaderProps> = ({ title, outline = false, icon = Icons.pr
         12: "Dezembro"
     }
 
-    return !outline ? (
+    return (
         <div className={styles['container']}>
-            <Subtitle light color={Colors.white}>{title}</Subtitle>
-            <Text color={Colors.lightGray} fontWeight={200}>{today.get('date') + " de " + mapMonths[today.get('month') + 1]}</Text>
 
-            <img alt="Yellow Monster" src={YellowMonster} className={styles['image']} />
-        </div>
-    ) :
-        (
-            <div className={styles['container_outline']}>
-
-                <div className={styles['left_container']}>
-                    <Icon path={icon} size={1} color={Colors.gray} />
-
-                    <Subtitle light color={Colors.gray}>{title}</Subtitle>
-                </div>
-
-                <div className={styles['right_container']}>
-                    <Icon path={Icons.edit} size={1} color={Colors.red} className={styles['icon']} />
-
-                    <Icon path={Icons.add} size={1} color={Colors.red} className={styles['icon']} />
-                </div>
+            <div>
+                <Subtitle light color={Colors.white}>{title}</Subtitle>
+                {
+                    date && <Text color={Colors.lightGray} fontWeight={200}>{today.get('date') + " de " + mapMonths[today.get('month') + 1]}</Text>
+                }
             </div>
-        )
-        ;
+
+            {
+                icon.length > 0 &&
+                <div className={styles['right_container']}>
+                    <Icon path={Icons.edit} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+
+                    <Icon path={Icons.add} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+                </div>
+
+            }
+        </div>
+    );
 
 }
 

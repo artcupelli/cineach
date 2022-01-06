@@ -1,4 +1,4 @@
-export default interface TitleProps {
+export default interface DetailProps {
     children: string,
     color?: string,
     fontWeight?: number

@@ -16,13 +16,20 @@ const MainScreen: React.FC = () => {
         <div className={styles['screen']}>
             <div className={styles['container']}>
 
-                <Menu />
+
+                <div className={styles['left_empty_space']}>
+                    <Menu />
+                </div>
+
 
                 <div className={styles['routes_container']}>
                     <LoggedRoutes />
                 </div>
 
-                <Cart />
+                <div className={styles['right_empty_space']}>
+                    <Cart />
+                </div>
+
             </div>
         </div>
 

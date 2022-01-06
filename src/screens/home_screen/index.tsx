@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Header, OutlineCard, SectionHeader } from '../../components/molecules';
+import { Header } from '../../components/molecules';
 
 import { FilmsList, SessionsList } from '../../components/organisms';
 
@@ -11,7 +11,7 @@ const HomeScreen: React.FC = () => {
   return (
     <div className={styles['container']}>
 
-      <Header title="Bem-vinda" />
+      <Header title="Bem-vinda" date />
 
       <FilmsList />
 

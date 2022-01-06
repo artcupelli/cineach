@@ -14,19 +14,20 @@ import { Link } from 'react-router-dom';
 const MenuItem: React.FC<MenuItemProps> = ({ icon, selected = false, onPress = () => { }, route }) => {
 
     return (
-        <div
-            className={styles[selected ? 'container_selected' : 'container']}
-            onClick={() => { onPress(route) }}
-        >
-            <Link to={route ?? "*"}>
+
+        <Link to={route ?? "*"}>
+            <div
+                className={styles[selected ? 'container_selected' : 'container']}
+                onClick={() => { onPress(route) }}
+            >
                 <Icon
                     path={icon}
                     color={selected ? Colors.red : Colors.white}
                     size={1.2}
                 />
-            </Link>
 
-        </div>
+            </div>
+        </Link>
     );
 }
 
