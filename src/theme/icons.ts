@@ -6,13 +6,15 @@ import {
     mdilAccount,
     mdilMessageImage,
     mdilPencil,
-    mdilPlus
+    mdilPlus,
+    mdilLogin
 } from '@mdi/light-js';
 
 
 export const Icons = {
     home: mdilHome,
     product: mdilCart,
+    logout: mdilLogin,
     session: mdilPresentationPlay,
     sales: mdilChartBar,
     user: mdilAccount,
