@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Menu } from '../../components/molecules';
 
+import { Cart } from '../../components/organisms';
+
 import LoggedRoutes from '../../routes/logged_routes';
 
 import styles from './main_screen_style.module.scss';
@@ -19,6 +21,8 @@ const MainScreen: React.FC = () => {
                 <div className={styles['routes_container']}>
                     <LoggedRoutes />
                 </div>
+
+                <Cart />
             </div>
         </div>
 
