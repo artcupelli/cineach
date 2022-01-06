@@ -22,7 +22,6 @@ const SubtileTextCard: React.FC<SubtitleTextCardProps> = ({subtitle,  rightSubti
                 <Text fontWeight={200} color={Colors.white}>{text}</Text>
             </div>
 
-<<<<<<< HEAD
             <div className={styles['preco']}> 
                 <Subtitle color={Colors.white}>
                     {rightSubtitle}
@@ -31,11 +30,6 @@ const SubtileTextCard: React.FC<SubtitleTextCardProps> = ({subtitle,  rightSubti
             </div>
 
             <div className={styles['maisBotao']}> <Icon path={Icons.add} size={1.5} color={Colors.red}/> </div>
-=======
-            <div>
-                <Subtitle color={Colors.white} >{rightSubtitle}</Subtitle>
-            </div>
->>>>>>> 76d90ccf5c06046ac31c7f6dc6ce15323fb34aea
 
         </div>
     );
