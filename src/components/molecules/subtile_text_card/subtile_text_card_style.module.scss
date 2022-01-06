@@ -1,7 +1,60 @@
-@import '../../../theme/colors.module.scss';
+@import "../../../theme/colors.module.scss";
 
 .container {
     background-color: $red;
     display: flex;
     flex-direction: row;
+    height: 5rem;
+    width: 20rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    border: 2px solid white;
+    transition: all 0.5s;
+    margin-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+
+    .maisBotao {
+        display: none;
+    }
+    .preco{
+        display: flex;
+    }
+    .preco, .maisBotao {
+        flex: 1;
+        margin-right: 1rem;
+        justify-content: right;
+    }
+}
+.container::before {
+    content: "";
+    width: 0.5rem;
+    height: 4rem;
+    background-color: white;
+    position: relative;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+    transition: all 0.5s;
+}
+.container:hover {
+    background-color: white;
+    color: $red;
+    border: 2px solid $red;
+    transition: all 0.5s;
+    div p,
+    div h2 {
+        color: $red !important;
+        font-weight: bold !important;
+    }
+    .preco {
+        display: none;
+    }
+    .maisBotao {
+        display: flex;
+    }
+}
+.container:hover::before {
+    background-color: $red;
+    transition: all 0.5s;
 }

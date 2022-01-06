@@ -20,6 +20,81 @@ const ProductsScreen: React.FC = () => {
           text='500g'
           rightSubtitle='R$ 17.90'
         />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        <SubtileTextCard
+          subtitle='Pipoca'
+          text='500g'
+          rightSubtitle='R$ 17.90'
+        />
+
+        
+        
       </div>
     </div>
   );
