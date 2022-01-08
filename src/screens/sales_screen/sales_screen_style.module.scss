@@ -1,80 +1,17 @@
 @import '../../theme/colors.module.scss';
-.container{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.destaques{
-    display: flex;
-    flex-direction: row;
-    height: 125px;
-    margin-top: 20px;
-}
-.ingressos_vendidos{
-    display: flex;
-    flex: 2;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border-radius: 20px 20px 0 20px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-}
-.quant_ingressos{
-    color: $red;
-    font-size: 30px;
-}
-.total_vendas{
-    display: flex;
-    flex: 4;
-    flex-direction: column;
-    background-color: $red;
-    justify-content:center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-radius: 20px 20px 0 20px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    h2{
-        text-align: center;
+.container {
+
+    .tab_list_container{
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
     }
-    .vendas_totais{
+
+    .people_container{
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        .valor_vendas_mes{
-            flex: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            
-            .valor_vendas{
-                
-                color: white;
-                font-size: 40px;
-            }
-        }
-        .separator{
-            width: 2px;
-            height: 50px;
-            content: '';
-            background-color: white;
-        }
-        .valor_vendas_sem{
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            .valor_vendas{
-                color: white;
-                font-size: 25px;
-            }
-        }
+        flex-wrap: wrap;
+        justify-content: flex-start;
     }
 }
-
-

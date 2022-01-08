@@ -1,47 +1,82 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import styles from './sales_screen_style.module.scss'
-import { Header } from '../../components/molecules';
+
+import { Header, InfoCard } from '../../components/molecules';
+
 import { Icons } from '../../theme/icons';
-import { Subtitle } from '../../components/atoms';
-import { Text } from '../../components/atoms';
-import { Colors } from '../../theme/colors';
+
+import { Pane, Tab, Tablist } from 'evergreen-ui';
+
+
 const SalesScreen: React.FC = () => {
+
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [tabs] = React.useState(['RELATÓRIOS', 'TODAS']);
+
   return (
+
     <div className={styles['container']}>
       <Header
-        title='Produtos'
-        icon={Icons.sales}
+        title='Vendas'
+        date={false}
+        icon={Icons.user}
       />
-      <div className={styles['destaques']}>
-        <div className={styles['ingressos_vendidos']}>
-          <Subtitle color={Colors.red}>INGRESSOS VENDIDOS</Subtitle>
-          <div className={styles['quant_ingressos']}>24.870</div>
-          <Text color={Colors.red}>Mês</Text>
-        </div>
 
-        <div className={styles['total_vendas']}>
-          <Subtitle color={Colors.white}>VALOR TOTAL DE VENDAS</Subtitle>
-          <div className={styles['vendas_totais']}>
-            <div className={styles['valor_vendas_mes']}>
-              <div className={styles['valor_vendas']}>24.870</div>
-              <Text color={Colors.white}>Semana</Text>
-            </div>
-            <div className={styles['separator']}/>
-            <div  className={styles['valor_vendas_sem']}>
-              <div className={styles['valor_vendas']}>24.870</div>
-              <Text color={Colors.white}>Mês</Text>
-            </div>
-          </div>
-        </div>
-
-        
-
+      <div className={styles['tab_list_container']}>
+        <Tablist>
+          {
+            tabs.map((tab, index) => {
+              return (
+                <Tab
+                  key={tab}
+                  id={tab}
+                  onSelect={() => setSelectedIndex(index)}
+                  isSelected={index === selectedIndex}
+                  aria-controls={`panel-${tab}`}
+                  color="red"
+                >{tab}</Tab>
+              )
+            })
+          }
+        </Tablist>
       </div>
 
-      <div className={styles['filmes_mais']}>
-          <Subtitle color={Colors.red}>FILMES MAIS VENDIDOS</Subtitle>
-          
-        </div>
+
+      <div className={styles['tabs_container']}>
+        {
+          tabs.map((tab, index) => {
+            return (<Pane
+              key={tab}
+              id={`panel-${tab}`}
+              role="tabpanel"
+              aria-labelledby={tab}
+              aria-hidden={index !== selectedIndex}
+              display={index === selectedIndex ? 'block' : 'none'}
+            >
+              <div className={styles['people_container']}>
+                <InfoCard
+                  info="20191"
+                  description="ingressos vendidos neste mês"
+                />
+                <InfoCard
+                  info="661.000,00"
+                  description="reais faturados neste mês"
+                />
+                <InfoCard
+                  info="130"
+                  description="novos clientes"
+                />
+                <InfoCard
+                  info="Coraline"
+                  description="foi o filme mais assistido neste mês"
+                />
+              </div>
+            </Pane>
+            )
+          })
+        }
+      </div>
 
 
     </div>

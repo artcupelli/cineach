@@ -1,0 +1,26 @@
+@import "../../../theme/colors.module.scss";
+
+.container {
+    transition: all 0.3s ;
+    min-width: max-content;
+    flex: 1;
+    background-color: $lighterGray;
+    border: 1px solid $lightGray;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 0 10px 10px 0;
+
+    h2 {
+        transition: all 0.3s ;
+    }
+}
+
+.container:hover {
+    transition: all 0.3s ;
+    background-color: white;
+
+    h2 {
+        font-weight: 700 !important;
+        transition: all 0.3s ;
+    }
+}

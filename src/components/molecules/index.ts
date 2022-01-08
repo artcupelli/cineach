@@ -10,3 +10,4 @@ export { default as CartItemCard } from './cart_item_card';
 export { default as FinalPrice } from './final_price';
 export { default as Modal } from './modal';
 export { default as PersonCard } from './person_card';
+export { default as InfoCard } from './info_card';

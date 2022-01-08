@@ -25,7 +25,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ title, pictureUrl, animation 
             </div>
 
             <div className={styles['sessions_container']}>
-                <Subtitle color={Colors.red}>{title}</Subtitle>
+                <Subtitle light color={Colors.black}>{title}</Subtitle>
                 <OutlineCard
                     leftText='3D Legendado'
                     middleText='Sala 01'

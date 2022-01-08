@@ -20,7 +20,8 @@
         display:flex;
         flex: 1;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        margin: 0 0 0 10px;
         transition: all 1s;
         opacity: 0;
         animation-name: fadeIn;
@@ -30,7 +31,7 @@
         animation-fill-mode: forwards;
         overflow-y: auto;
         div{
-            width: 80%;
+            width: 90%;
             cursor: pointer;
             
         }
