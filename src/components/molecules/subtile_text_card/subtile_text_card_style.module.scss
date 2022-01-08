@@ -4,44 +4,48 @@
     background-color: $red;
     display: flex;
     flex-direction: row;
-    height: 5rem;
-    width: 20rem;
+    flex: 1;
+    min-width: 300px;
     border-radius: 0.5rem;
     align-items: center;
-    border: 2px solid white;
+    border: 1px solid white;
     transition: all 0.5s;
-    margin-right: 20px;
-    margin-top: 20px;
-    cursor: pointer;
+    margin: 0 10px 10px 0;
+    padding: 20px 10px;
 
     .maisBotao {
         display: none;
     }
-    .preco{
+
+    .preco {
         display: flex;
     }
-    .preco, .maisBotao {
+
+    .preco,
+    .maisBotao {
+        min-width: 40%;
         flex: 1;
         margin-right: 1rem;
         justify-content: right;
     }
 }
-.container::before {
-    content: "";
-    width: 0.5rem;
-    height: 4rem;
+
+.right_detail {
+    width: 5px;
+    height: 100%;
     background-color: white;
-    position: relative;
     border-radius: 0.5rem;
     margin-left: 0.5rem;
     margin-right: 1rem;
     transition: all 0.5s;
 }
+
 .container:hover {
     background-color: white;
     color: $red;
-    border: 2px solid $red;
+    border: 1px solid $red;
     transition: all 0.5s;
+    
     div p,
     div h2 {
         color: $red !important;
@@ -52,9 +56,11 @@
     }
     .maisBotao {
         display: flex;
+        cursor: pointer;
     }
 }
-.container:hover::before {
+
+.container:hover .right_detail {
     background-color: $red;
     transition: all 0.5s;
 }

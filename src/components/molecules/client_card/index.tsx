@@ -13,13 +13,10 @@ import styles from './client_card_style.module.scss';
 import { Colors } from '../../../theme/colors';
 
 
-const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = 'A' }) => {
+const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalSearchCliente }) => {
 
-  const [nameState, setName] = useState<string>(name);
+  const [nameState] = useState<string>(name);
 
-  function changeName() {
-    setName('Nicole Page Brooks');
-  }
 
   return (
     <div className={styles['container']}>
@@ -37,7 +34,18 @@ const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = 'A' }) => {
               Nenhum cliente selecionado...
             </Detail>
 
-            <Button onClick={changeName}>SELECIONAR CLIENTE</Button>
+            <Button onClick={openModalSearchCliente}>SELECIONAR CLIENTE</Button>
+            {/* 
+            <Modal
+              isOpen={isModalOpen}
+              title='BUSCAR CLIENTE'
+            >
+              <SearchClientForms
+
+                closeModal={() => { setIsModalOpen(false) }}
+              />
+            </Modal> */}
+
           </div>
       }
     </div>

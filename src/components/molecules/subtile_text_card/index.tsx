@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Subtitle, Text } from '../../atoms';
+import { Detail, Subtitle } from '../../atoms';
 
 import SubtitleTextCardProps from './subtile_text_card_props';
 
@@ -20,8 +20,8 @@ const SubtileTextCard: React.FC<SubtitleTextCardProps> = ({ subtitle, rightSubti
             <div className={styles['right_detail']} />
 
             <div>
-                <Subtitle color={Colors.white}>{subtitle}</Subtitle>
-                <Text fontWeight={200} color={Colors.white}>{text}</Text>
+                <Subtitle color={Colors.white} light>{subtitle}</Subtitle>
+                <Detail fontWeight={400} color={Colors.lightGray}>{text}</Detail>
             </div>
 
             <div className={styles['preco']}>

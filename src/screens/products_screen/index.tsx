@@ -32,7 +32,7 @@ const ProductsScreen: React.FC = () => {
         />
 
         <SubtileTextCard
-          subtitle='Pipoca'
+          subtitle='Refrigerante de Uva Super'
           text='500g'
           rightSubtitle='R$ 17.90'
         />

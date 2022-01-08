@@ -13,6 +13,7 @@ import { Colors } from '../../../theme/colors';
 import { Icons } from '../../../theme/icons';
 
 import Icon from '@mdi/react';
+import { Tooltip } from 'evergreen-ui';
 
 
 const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '' }) => {
@@ -46,9 +47,13 @@ const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '' }) => {
             {
                 icon.length > 0 &&
                 <div className={styles['right_container']}>
-                    <Icon path={Icons.edit} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+                    <Tooltip content='Editar'>
+                        <Icon path={Icons.edit} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+                    </Tooltip>
 
-                    <Icon path={Icons.add} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+                    <Tooltip content="Novo">
+                        <Icon path={Icons.add} size={1.2} color={Colors.lightGray} className={styles['icon']} />
+                    </Tooltip>
                 </div>
 
             }

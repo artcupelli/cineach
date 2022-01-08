@@ -5,10 +5,12 @@ import { ClientCard, FinalPrice, LoggedUserCard } from '../../molecules';
 
 import { ProductsCart } from '../../organisms';
 
+import CartProps from './cart_props';
+
 import styles from './cart_style.module.scss';
 
 
-const Cart: React.FC = () => {
+const Cart: React.FC<CartProps> = ({ openModalSearchCliente }) => {
 
   return (
     <div className={styles['container']}>
@@ -22,6 +24,7 @@ const Cart: React.FC = () => {
         <ClientCard
           name=''
           cpf='441.423.213-32'
+          openModalSearchCliente={openModalSearchCliente}
         />
 
         <ProductsCart />

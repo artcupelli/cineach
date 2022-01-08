@@ -1,4 +1,5 @@
 export default interface ClientCardProps {
     name?: string,
-    cpf?: string
+    cpf?: string,
+    openModalSearchCliente?: Function 
 }

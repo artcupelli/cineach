@@ -1,7 +1,7 @@
 @import "../../../theme/colors.module.scss";
 
 .container {
-    border: 1px solid transparent;
+    border: 1px solid $red;
     transition: all 0.5s;
     background-color: $red;
     display: flex;
@@ -14,9 +14,12 @@
 }
 
 .container:hover {
-    border: 1px solid $red;
     transition: all 0.5s;
     background-color: transparent;
     cursor: pointer;
-}
 
+    p {
+        color: $red !important;
+        font-weight: 500 !important;
+    }
+}

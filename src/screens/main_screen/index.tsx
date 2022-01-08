@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Menu } from '../../components/molecules';
+import { Menu, Modal } from '../../components/molecules';
 
-import { Cart } from '../../components/organisms';
+import { Cart, SearchClientForms } from '../../components/organisms';
 
 import LoggedRoutes from '../../routes/logged_routes';
 
@@ -11,6 +11,9 @@ import styles from './main_screen_style.module.scss';
 
 
 const MainScreen: React.FC = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
     return (
 
         <div className={styles['screen']}>
@@ -27,8 +30,20 @@ const MainScreen: React.FC = () => {
                 </div>
 
                 <div className={styles['right_empty_space']}>
-                    <Cart />
+                    <Cart
+                        openModalSearchCliente={()=>{setIsModalOpen(true)}}
+                    />
                 </div>
+                
+                <Modal
+                    isOpen={isModalOpen}
+                    title='BUSCAR CLIENTE'
+                >
+                    <SearchClientForms
+
+                        closeModal={() => { setIsModalOpen(false) }}
+                    />
+                </Modal>
 
             </div>
         </div>

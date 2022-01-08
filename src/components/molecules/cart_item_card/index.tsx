@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Detail, Subtitle, Text } from '../../atoms';
+import { Detail, Text } from '../../atoms';
 
 import styles from './cart_item_card_style.module.scss';
 
@@ -40,7 +40,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, te
                 <div onClick={()=>{setQnt(qnt-1)}}>
                     <Icon
                         path={Icons.minus}
-                        size={1.2}
+                        size={1.1}
                         color={Colors.white}
                         className={styles['icon']}
                     />
@@ -48,13 +48,13 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, te
 
 
                 <div className={styles['quantity']}>
-                    <Subtitle color={Colors.gray}>{qnt.toString()}</Subtitle>
+                    <Text color={Colors.gray}>{qnt.toString()}</Text>
                 </div>
 
                 <div onClick={()=>{setQnt(qnt+1)}}>
                     <Icon
                         path={Icons.add}
-                        size={1.2}
+                        size={1.1}
                         color={Colors.white}
                         className={styles['icon']}
                     />
