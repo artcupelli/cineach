@@ -6,8 +6,9 @@ import { Header, InfoCard } from '../../components/molecules';
 
 import { Icons } from '../../theme/icons';
 
-import { Pane, Tab, Tablist, Table, Spinner } from 'evergreen-ui';
+import { Pane, Tab, Tablist, Table, Spinner, Alert } from 'evergreen-ui';
 import { getAllSales, Sale } from '../../services/sales_service';
+import { Detail } from '../../components/atoms';
 
 
 const SalesScreen: React.FC = () => {
@@ -119,32 +120,35 @@ const Sales: React.FC = () => {
         isLoading ?
           <Spinner />
           :
-          <Table width="100%">
-            <Table.Head>
-              <Table.TextHeaderCell>ID</Table.TextHeaderCell>
-              <Table.TextHeaderCell>Forma Pagamento</Table.TextHeaderCell>
-              <Table.TextHeaderCell>Cliente</Table.TextHeaderCell>
-              <Table.TextHeaderCell>CPF Cliente</Table.TextHeaderCell>
-              <Table.TextHeaderCell>Funcionário</Table.TextHeaderCell>
-              <Table.TextHeaderCell>CPF Funcionário</Table.TextHeaderCell>
-            </Table.Head>
-            <Table.Body>
-              {
-                sales.map((s) => {
-                  return (
-                    <Table.Row key={s.id} isSelectable onSelect={() => alert("profile.name")}>
-                      <Table.TextCell>{s.id}</Table.TextCell>
-                      <Table.TextCell>{s.formaPagamento}</Table.TextCell>
-                      <Table.TextCell>{s.cliente?.nome}</Table.TextCell>
-                      <Table.TextCell>{s.cpfCliente}</Table.TextCell>
-                      <Table.TextCell>{s.funcionario?.nome}</Table.TextCell>
-                      <Table.TextCell>{s.cpfFuncionario}</Table.TextCell>
-                    </Table.Row>
-                  )
-                })
-              }
-            </Table.Body>
-          </Table>
+          <>
+            <Alert intent="warning" width="100%">Caso demore para carregar os nomes, clique na aba 'Relatórios' e retorne para 'Todas'</Alert>
+            <Table width="100%">
+              <Table.Head>
+                <Table.TextHeaderCell>ID</Table.TextHeaderCell>
+                <Table.TextHeaderCell>Forma Pagamento</Table.TextHeaderCell>
+                <Table.TextHeaderCell>Cliente</Table.TextHeaderCell>
+                <Table.TextHeaderCell>CPF Cliente</Table.TextHeaderCell>
+                <Table.TextHeaderCell>Funcionário</Table.TextHeaderCell>
+                <Table.TextHeaderCell>CPF Funcionário</Table.TextHeaderCell>
+              </Table.Head>
+              <Table.Body>
+                {
+                  sales.map((s) => {
+                    return (
+                      <Table.Row key={s.id} isSelectable >
+                        <Table.TextCell>{s.id}</Table.TextCell>
+                        <Table.TextCell>{s.formaPagamento}</Table.TextCell>
+                        <Table.TextCell>{s.cliente?.nome || "Carregando..."}</Table.TextCell>
+                        <Table.TextCell>{s.cpfCliente}</Table.TextCell>
+                        <Table.TextCell>{s.funcionario?.nome || "Carregando..."}</Table.TextCell>
+                        <Table.TextCell>{s.cpfFuncionario}</Table.TextCell>
+                      </Table.Row>
+                    )
+                  })
+                }
+              </Table.Body>
+            </Table>
+          </>
       }
 
     </>
