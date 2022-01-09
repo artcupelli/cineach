@@ -38,10 +38,10 @@ const SearchClientForms: React.FC<SearchClientProps> = ({ closeModal = () => { }
 
     return (
         <div className={styles['container']}>
-            <Text>Digite o CPF do cliente que deseja buscar.</Text>
+            <Text>Digite o CPF do cliente que deseja buscar. (Somente números)</Text>
 
             <SearchInput
-                placeholder='000.000.000-00'
+                placeholder='00000000000'
                 value={cpf}
                 onChange={(e: any) => setCPF(e.target.value)}
             />

@@ -123,10 +123,14 @@ export async function editEmployee(employee: Employee) {
 }
 
 export async function postClient(client: Client) {
-
     try {
+
         const response = await clientService.api.post('', client);
         const data = response.status;
+
+        if (client.telefones !== undefined && client.telefones?.length > 0) {
+            await postPhoneNumber(client.telefones, client.cpf);
+        }
 
         if (data === 201) {
             toaster.success("Funcionário cadastrado com sucesso!")
@@ -231,6 +235,22 @@ export async function getPhoneNumber(cpf: string) {
             returnList.push(p.numero)));
 
         return returnList;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+export async function postPhoneNumber(phones: string[], cpf: string) {
+
+    const phoneService = new GenericService('/telefones');
+    
+    try {
+        phones.forEach(async (p) => {
+            await phoneService.api.post(``, {cpf: cpf.toString(), numero: p } as Phone);
+        });
 
     } catch (error) {
         console.log(error);

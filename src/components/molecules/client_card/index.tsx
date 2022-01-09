@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { LoggedUserCard } from '..';
+import { LoggedUserCard, Modal } from '..';
 
 import { Button, Detail } from '../../atoms';
 
@@ -12,10 +12,13 @@ import styles from './client_card_style.module.scss';
 
 import { Colors } from '../../../theme/colors';
 
+import { SearchClientForms } from '../../organisms';
+
 
 const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalSearchCliente }) => {
 
   const [nameState, setName] = useState<string>(name);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setName(name);
@@ -38,8 +41,11 @@ const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalS
               Nenhum cliente selecionado...
             </Detail>
 
-            <Button onClick={openModalSearchCliente}>SELECIONAR CLIENTE</Button>
+            <Modal isOpen={modalVisible} close={() => { setModalVisible(false) }} title='Buscar cliente' >
+              <SearchClientForms closeModal={() => setModalVisible(false)} />
+            </Modal>
 
+            <Button onClick={() => setModalVisible(true)}>SELECIONAR CLIENTE</Button>
 
           </div>
       }

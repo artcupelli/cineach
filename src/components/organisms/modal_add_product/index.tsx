@@ -39,7 +39,7 @@ const ModalAddProduct: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
 
 
     return (
-        <Modal isOpen={isOpen} title='Filme' close={onClose} >
+        <Modal isOpen={isOpen} title='Acompanhamento' close={onClose} >
             {
                 isLoading ?
                     <Spinner />

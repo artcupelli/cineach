@@ -50,7 +50,10 @@ const ModalAddClient: React.FC<ModalAddEmployeProps> = ({ isOpen, close = () => 
                         <Formik
                             initialValues={initialValues}
                             onSubmit={async (values) => {
-                                edit ? await editClient(values) : await postClient(values);
+                                edit ?
+                                    await editClient({ ...values, telefones: phones }) :
+                                    await postClient({ ...values, telefones: phones });
+                                setPhones([]);
                                 close();
                             }}
                             enableReinitialize

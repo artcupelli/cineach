@@ -8,7 +8,7 @@ import { Icons } from '../../theme/icons';
 
 import { Pane, Tab, Tablist, Table, Spinner, Alert } from 'evergreen-ui';
 
-import { getAllSales, Sale } from '../../services/sales_service';
+import { Dashboard, getAllSales, getDashboard, Sale } from '../../services/sales_service';
 
 
 const SalesScreen: React.FC = () => {
@@ -75,23 +75,53 @@ const SalesScreen: React.FC = () => {
 
 const Relatorio: React.FC = () => {
 
+  const [, setDashboard] = useState<Dashboard>();
+  const [, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+
+    setLoading(true);
+    const getInfo = async () => {
+      setDashboard(await getDashboard());
+    }
+    getInfo();
+    
+    setLoading(false);
+  }, []);
+
   return (
     <>
       <InfoCard
-        info="20191"
-        description="ingressos vendidos neste mês"
-      />
-      <InfoCard
-        info="661.000,00"
-        description="reais faturados neste mês"
-      />
-      <InfoCard
-        info="130"
-        description="novos clientes"
+        info="Jurassic World: Domínio"
+        description="filme mais assistido"
       />
       <InfoCard
         info="Coraline"
-        description="foi o filme mais assistido neste mês"
+        description="filme menos assistido"
+      />
+      <InfoCard
+        info="2"
+        description="ingressos vendidos no mês"
+      />
+      <InfoCard
+        info="25"
+        description="ingressos vendidos no total"
+      />
+      <InfoCard
+        info="342,75"
+        description="reais faturados com acompanhamentos"
+      />
+      <InfoCard
+        info="3597"
+        description="total de acompanhamentos disponíveis"
+      />
+      <InfoCard
+        info="20"
+        description="total de funcionários cadastrados"
+      />
+      <InfoCard
+        info="20"
+        description="total de clientes cadastrados"
       />
     </>
   );

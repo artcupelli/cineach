@@ -7,3 +7,4 @@ export { default as ModalAddEmployee} from './modal_add_employee';
 export { default as ModalAddClient} from './modal_add_client';
 export { default as ModalAddMovie} from './modal_add_movie';
 export { default as ModalAddRoom} from './modal_add_room';
+export { default as ModalAddSession} from './modal_add_session';

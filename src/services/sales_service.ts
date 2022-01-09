@@ -11,7 +11,20 @@ export interface Sale {
     funcionario?: Employee
 }
 
+export interface Dashboard {
+    filmeMaisAssistido: string,
+    filmeMenosAssistido: string,
+    quantidadeIngressosVendidosNoMes: number,
+    quantidadeIngressosVendidosNoTotal: number,
+    reaisFaturadosComAcompanhamentos: number,
+    totalAcompanhamentosDisponiveis: number,
+    totalClientesCadastrados: number,
+    totalFuncionariosCadastrados: number
+}
+
 const salesService = new GenericService('/vendas');
+
+const dashboardService = new GenericService('/dashboard');
 
 
 export async function getAllSales() {
@@ -34,3 +47,18 @@ export async function getAllSales() {
     }
 
 }
+
+export async function getDashboard() {
+
+    try {
+        const response = await dashboardService.api.get('');
+        const data = response.data;
+
+        return data;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+

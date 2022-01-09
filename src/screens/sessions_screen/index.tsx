@@ -6,6 +6,8 @@ import { Header } from '../../components/molecules';
 
 import SessionCard from "../../components/molecules/session_card";
 
+import { ModalAddSession } from '../../components/organisms';
+
 import { getAllSessions, Session } from '../../services/sessions_service';
 
 import { Icons } from '../../theme/icons';
@@ -43,6 +45,10 @@ const SessionScreen: React.FC = () => {
         icon={Icons.session}
       />
 
+      <ModalAddSession
+        isOpen={true}
+      />
+
       <div className={styles['sessions_container']}>
         {
           isLoading
@@ -53,7 +59,7 @@ const SessionScreen: React.FC = () => {
               return (
                 <SessionCard
                   title={s.tituloFilme}
-                  description={`${formatDate(s.data)} às ${s.horarioInicio.substring(0,5)}   Sala ${s.numSala}`}
+                  description={`${formatDate(s.data)} às ${s.horarioInicio.substring(0, 5)}   Sala ${s.numSala}`}
                   year={s.anoFilme}
                 />
               )
