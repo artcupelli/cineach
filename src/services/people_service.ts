@@ -45,6 +45,42 @@ export async function getAllClients() {
 
 }
 
+export async function getClient(cpf: string) {
+
+    try {
+        const response = await clientService.api.get(`/${cpf}`);
+        const data = response.data;
+
+        var client: Client = data;
+
+        client.telefones = await getPhoneNumber(client.cpf) || []
+
+        return client;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export async function getEmployee(cpf: string) {
+
+    try {
+        const response = await employeeService.api.get(`/${cpf}`);
+        const data = response.data;
+
+        var employee: Employee = data;
+
+        employee.telefones = await getPhoneNumber(employee.cpf) || []
+
+        return employee;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export async function postEmployee(employee: Employee) {
 
     try {
