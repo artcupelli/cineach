@@ -1,3 +1,4 @@
+import { Alert } from 'evergreen-ui';
 import React, { useEffect } from 'react';
 
 import { Header } from '../../components/molecules';
@@ -11,18 +12,12 @@ import styles from './home_screen_style.module.scss';
 
 const HomeScreen: React.FC = () => {
 
-  useEffect(() => {
-    async function test() {
-      console.log(await getAllFilms());
-    }
-
-    test();
-  })
-
   return (
     <div className={styles['container']}>
 
       <Header title="Bem-vinda" date />
+
+      <Alert intent="warning">Ao abrir pela primeira vez o site, o conteúdo pode demorar alguns segundos para carregar. Por favor, aguarde.</Alert>
 
       <FilmsList />
 

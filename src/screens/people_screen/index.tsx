@@ -1,12 +1,14 @@
-import { Tablist, Tab, Pane, Spinner } from 'evergreen-ui';
+import { Tablist, Tab, Pane, Spinner, CornerDialog } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
+import { Button } from '../../components/atoms';
+
 import { Header, PersonCard } from '../../components/molecules';
 
-import { ModalAddEmployee } from '../../components/organisms';
+import { ModalAddClient, ModalAddEmployee } from '../../components/organisms';
 
-import { Client, Employee, getAllClients, getAllEmployees } from '../../services/people_service';
+import { Client, deleteClient, deleteEmployee, Employee, getAllClients, getAllEmployees } from '../../services/people_service';
 
 import { Icons } from '../../theme/icons';
 
@@ -17,20 +19,36 @@ const PeopleScreen: React.FC = () => {
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [tabs] = React.useState(['FUNCIONÁRIOS', 'CLIENTES']);
-  const panels = [<Employees />, <Clients />];
+
+  const [openModalAddClient, setOpenModalAddClient] = useState<boolean>(false);
+  const [openModalAddEmployee, setOpenModalAddEmployee] = useState<boolean>(false);
+
+  const [added, setAdded] = useState<boolean>(false);
+
+  const panels = [<Employees addedFunc={added} />, <Clients addedCli={added} />];
+
 
   return (
 
     <div className={styles['container']}>
-      <ModalAddEmployee
-
-      />
 
       <Header
         title='Pessoas'
         date={false}
         icon={Icons.user}
+        onAdd={() => { if (selectedIndex === 1) { setOpenModalAddClient(true); } else setOpenModalAddEmployee(true) }}
       />
+
+      <ModalAddClient
+        isOpen={openModalAddClient}
+        close={() => { setOpenModalAddClient(false); setAdded(!added) }}
+      />
+
+      <ModalAddEmployee
+        isOpen={openModalAddEmployee}
+        onClose={() => { setOpenModalAddEmployee(false); setAdded(!added) }}
+      />
+
 
       <div className={styles['tab_list_container']}>
         <Tablist>
@@ -76,24 +94,52 @@ const PeopleScreen: React.FC = () => {
   );
 }
 
-const Clients: React.FC = () => {
+const Clients: React.FC<{ addedCli: boolean }> = ({ addedCli }) => {
 
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [added, setAdded] = useState<boolean>(false);
 
-  async function searchAllClients() {
-    const response = await getAllClients();
-    setClients(response || []);
-    setLoading(false);
-  }
+
+  const [editClient, setEditClient] = useState<Client>({} as Client);
+
+  const [selDeleteClient, setDeleteClient] = useState<Client>({} as Client);
+
 
   useEffect(() => {
+    async function searchAllClients() {
+      const response = await getAllClients();
+      setClients(response || []);
+      setLoading(false);
+    }
+
     searchAllClients();
-  }, [])
+  }, [added, addedCli]);
 
 
   return (
     <div className={styles['people_container']}>
+
+      <ModalAddClient
+        isOpen={editClient?.cpf?.length > 0}
+        client={editClient}
+        close={()=>{ setEditClient({} as Client); setAdded(!added)}}
+        edit={true}
+      />
+
+      <CornerDialog
+        onCloseComplete={() => setDeleteClient({} as Client)}
+        intent="danger"
+        isShown={selDeleteClient?.cpf?.length > 0}
+        confirmLabel='Excluir'
+        title="Deseja mesmo excluir este cliente?"
+        cancelLabel='Cancelar'
+        onConfirm={async () => { await deleteClient(selDeleteClient.cpf); setDeleteClient({} as Client); setAdded(!added) }}
+        onCancel={() => setDeleteClient({} as Client)}
+      >
+        Você deseja mesmo excluir {selDeleteClient.nome}? Cuidado! Esta ação não tem volta!
+      </CornerDialog>
+
       {
         isLoading
           ?
@@ -105,6 +151,8 @@ const Clients: React.FC = () => {
               cpf={c.cpf}
               email={c.email}
               phone={c.telefones ?? []}
+              onDelete={() => { setDeleteClient(c); }}
+              onEdit={() => { setEditClient(c); }}
             />
           })
       }
@@ -113,24 +161,51 @@ const Clients: React.FC = () => {
   );
 };
 
-const Employees: React.FC = () => {
+const Employees: React.FC<{ addedFunc: boolean }> = ({ addedFunc }) => {
 
   const [employess, setEmployess] = useState<Employee[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [added, setAdded] = useState<boolean>(false);
 
-  async function searchAllEmployees() {
-    const response = await getAllEmployees();
-    setEmployess(response || []);
-    setLoading(false);
-  }
+
+  const [editEmployee, setEditEmployee] = useState<Employee>({} as Employee);
+  const [selDeleteEmployee, setDeleteEmployee] = useState<Employee>({} as Employee);
+
 
   useEffect(() => {
-    searchAllEmployees();
-  }, [])
+    async function searchAllEmployees() {
+      setLoading(true);
+      const response = await getAllEmployees();
+      setEmployess(response || []);
+      setLoading(false);
+    }
 
+    searchAllEmployees();
+  }, [added, addedFunc])
 
   return (
     <div className={styles['people_container']}>
+
+      <ModalAddEmployee
+        employee={editEmployee}
+        isOpen={editEmployee?.cpf?.length > 0}
+        onClose={()=>{ setEditEmployee({} as Employee); setAdded(!added)}}
+        edit={true}
+      />
+
+      <CornerDialog
+        onCloseComplete={() => setDeleteEmployee({} as Employee)}
+        intent="danger"
+        isShown={selDeleteEmployee?.cpf?.length > 0}
+        confirmLabel='Excluir'
+        title="Deseja mesmo excluir este funcionário?"
+        cancelLabel='Cancelar'
+        onConfirm={async () => { await deleteEmployee(selDeleteEmployee.cpf); setDeleteEmployee({} as Employee); setAdded(!added) }}
+        onCancel={() => setDeleteEmployee({} as Employee)}
+      >
+        Você deseja mesmo excluir {selDeleteEmployee.nome}? Cuidado! Esta ação não tem volta!
+      </CornerDialog>
+
       {
         isLoading
           ?
@@ -143,6 +218,8 @@ const Employees: React.FC = () => {
               email={c.email}
               phone={c.telefones ?? []}
               position={c.cargo}
+              onDelete={() => { setDeleteEmployee(c); }}
+              onEdit={() => { setEditEmployee(c); }}
             />
           })
       }

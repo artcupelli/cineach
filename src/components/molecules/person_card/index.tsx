@@ -19,7 +19,9 @@ const PersonCard: React.FC<PersonCardProps> = ({
     email,
     name,
     phone,
-    position
+    position,
+    onDelete = () => { },
+    onEdit = () => { }
 }) => {
 
     return (
@@ -47,11 +49,11 @@ const PersonCard: React.FC<PersonCardProps> = ({
                             <div className={styles['info']}>
                                 <Detail>Telefone</Detail>
                                 {
-                                    phone.map((p)=>{
-                                        return <Text key={p+1} color={Colors.darkGray}>{(p)}</Text>
+                                    phone.map((p) => {
+                                        return <Text key={p + 1} color={Colors.darkGray}>{(p)}</Text>
                                     })
                                 }
-                                
+
                             </div>
                         }
 
@@ -67,12 +69,17 @@ const PersonCard: React.FC<PersonCardProps> = ({
                     </div>
 
                     <div className={styles['icons_container']}>
-                        <Tooltip content='Excluir'>
-                            <Icon path={Icons.trash} color={Colors.red} size={1} className={styles['icon']} />
+                        <Tooltip content='Excluir'  >
+                            <div onClick={() => { onDelete() }}>
+                                <Icon path={Icons.trash} color={Colors.red} size={1} className={styles['icon']} />
+                            </div>
                         </Tooltip>
                         <Tooltip content='Editar'>
-                            <Icon path={Icons.edit} color={Colors.red} size={1} className={styles['icon']} />
+                            <div onClick={() => { onEdit() }}>
+                                <Icon path={Icons.edit} color={Colors.red} size={1} className={styles['icon']} />
+                            </div>
                         </Tooltip>
+
                     </div>
                 </div>
 

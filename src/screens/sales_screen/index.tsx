@@ -7,8 +7,8 @@ import { Header, InfoCard } from '../../components/molecules';
 import { Icons } from '../../theme/icons';
 
 import { Pane, Tab, Tablist, Table, Spinner, Alert } from 'evergreen-ui';
+
 import { getAllSales, Sale } from '../../services/sales_service';
-import { Detail } from '../../components/atoms';
 
 
 const SalesScreen: React.FC = () => {

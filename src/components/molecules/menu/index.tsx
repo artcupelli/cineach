@@ -37,7 +37,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/products"
                 selected={isItemSelected('/products')}
-                title="Produtos"
+                title="Acompanhamentos"
             />
 
             <MenuItem

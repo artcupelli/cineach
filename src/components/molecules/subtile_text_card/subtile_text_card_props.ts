@@ -3,4 +3,7 @@ export default interface SubtitleTextCardProps {
     text: string
     rightSubtitle: string
     price?: boolean
+    onDelete?: Function
+    onAdd?: Function
+    onEdit?: Function
 }

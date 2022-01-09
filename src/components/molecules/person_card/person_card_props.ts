@@ -3,6 +3,7 @@ export default interface PersonCard {
     cpf: string
     phone: string[]
     email: string
-    position?: string
-    
+    position?: string,
+    onEdit?: Function,
+    onDelete?: Function   
 }

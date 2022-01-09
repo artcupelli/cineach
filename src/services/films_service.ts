@@ -1,3 +1,4 @@
+import { toaster } from "evergreen-ui";
 import GenericService, { ResponseTest } from "./generic_service";
 
 export interface Film {
@@ -14,7 +15,7 @@ const filmService = new GenericService('/filmes');
 export async function getAllFilms() {
 
     try {
-        const response = await filmService.api.get('');
+        const response = await filmService.api.get('?size=200');
         const data: ResponseTest = response.data;
         return (data.content) as Film[] ?? [];
 
@@ -33,6 +34,62 @@ export async function getFilm(title: string, year: number) {
 
     } catch (error) {
         console.log(error);
+    }
+
+}
+
+
+export async function deleteFilm(title: string, year: number) {
+
+    try {
+        const response = await filmService.api.delete(`/${title}/ano/${year}`);
+        const data = response.status;
+        if(data === 204){
+            toaster.success("Filme excluído com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na exclusão, filme pode contém ingressos!");
+        }
+         
+
+    } catch (error) {
+        toaster.danger("Erro na exclusão, filme pode contém ingressos!");
+    }
+
+}
+
+
+export async function postFilm(film: Film) {
+
+    try {
+        const response = await filmService.api.post(``, film);
+        const data = response.status;
+        if(data === 201){
+            toaster.success("Filme cadastrado com sucesso!")
+        }
+        else {
+             toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
+    }
+
+}
+export async function editFilm(film: Film) {
+
+    try {
+        const response = await filmService.api.put(`/${film.titulo}/ano/${film.anoDeLancamento}`, film);
+        const data = response.status;
+        if(data === 200){
+            toaster.success("Filme editado com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na edição, verifique os campos!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro na edição, verifique os campos!");
     }
 
 }

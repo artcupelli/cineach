@@ -4,65 +4,65 @@ import { Formik, useFormik } from 'formik';
 
 import React, { useEffect, useState } from 'react';
 
-import { editEmployee, Employee, postEmployee } from '../../../services/people_service';
+import { Client, editClient, postClient } from '../../../services/people_service';
 
 import { Button, Detail } from '../../atoms';
 
 import { Modal } from '../../molecules';
 
-import ModalAddEmployeProps from './modal_add_employee_props';
+import ModalAddEmployeProps from './modal_add_client_props';
 
-import styles from './modal_add_employee_styles.module.scss';
+import styles from './modal_add_client_styles.module.scss';
 
 
-const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => { }, employee = undefined, edit = false }) => {
+const ModalAddClient: React.FC<ModalAddEmployeProps> = ({ isOpen, close = () => { }, client, edit = false }) => {
 
-    const values: Employee = {
+
+    const values: Client = {
+        quantidadeIngressosGratisColetados: 0,
         nome: '',
-        cargo: '',
         cpf: '',
         email: '',
         telefones: []
     }
 
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [phones, setPhones] = useState<string[]>(employee?.telefones || []);
-    const [initialValues, setInitialValues] = useState<Employee>(employee || {} as Employee);
+    const [phones, setPhones] = useState<string[]>(client?.telefones || []);
+    const [initialValues, setInitialValues] = useState<Client>(client || {} as Client);
 
     useEffect(() => {
         setLoading(true);
-        setPhones(employee?.telefones || []);
-        setInitialValues(employee || values);
+        setPhones(client?.telefones || []);
+        setInitialValues(client || values);
         setLoading(false);
-    }, [employee]);
+    }, [client]);
 
     useEffect(() => {
         setLoading(true);
-        setPhones(employee?.telefones || []);
-        setInitialValues(employee || values);
+        setPhones(client?.telefones || []);
+        setInitialValues(client || values);
         setLoading(false);
     }, []);
 
 
     return (
-        <Modal isOpen={isOpen} title='Funcionário' close={onClose} >
+        <Modal isOpen={isOpen} title='Cliente' close={close}>
             {
                 isLoading ?
                     <Spinner />
                     :
                     <div className={styles['container']}>
-
                         <Formik
                             initialValues={initialValues}
                             onSubmit={async (values) => {
-                                const response = edit ? await editEmployee(values) : await postEmployee(values);
-                                onClose();
+                                const response = edit ? await editClient(values) : await postClient(values);
+                                close();
                             }}
                             enableReinitialize
 
                         >
                             {({ values, handleSubmit, handleChange }) => (
-                                <form onSubmit={handleSubmit} >
+                                <form onSubmit={handleSubmit}>
 
                                     <TextInputField
                                         label="Nome"
@@ -70,14 +70,6 @@ const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = ()
                                         name="nome"
                                         required
                                         value={values.nome}
-                                        onChange={handleChange}
-                                    />
-                                    <TextInputField
-                                        label="Cargo"
-                                        placeholder='Cargo'
-                                        name="cargo"
-                                        required
-                                        value={values.cargo}
                                         onChange={handleChange}
                                     />
 
@@ -117,6 +109,7 @@ const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = ()
                                         <Button onClick={handleSubmit}>SALVAR</Button>
                                     </div>
 
+
                                 </form>
                             )}
 
@@ -129,4 +122,4 @@ const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = ()
     );
 }
 
-export default ModalAddEmployee;
+export default ModalAddClient;

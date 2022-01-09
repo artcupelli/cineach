@@ -16,7 +16,7 @@ import Icon from '@mdi/react';
 import { Tooltip } from 'evergreen-ui';
 
 
-const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '' }) => {
+const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '', onAdd = ()=>{} }) => {
     const today = moment();
 
     const mapMonths: { [id: number]: string } = {
@@ -46,11 +46,7 @@ const Header: React.FC<HeaderProps> = ({ title, date = false, icon = '' }) => {
 
             {
                 icon.length > 0 &&
-                <div className={styles['right_container']}>
-                    <Tooltip content='Editar'>
-                        <Icon path={Icons.edit} size={1.2} color={Colors.lightGray} className={styles['icon']} />
-                    </Tooltip>
-
+                <div className={styles['right_container']} onClick={() =>{ onAdd()}}>
                     <Tooltip content="Novo">
                         <Icon path={Icons.add} size={1.2} color={Colors.lightGray} className={styles['icon']} />
                     </Tooltip>

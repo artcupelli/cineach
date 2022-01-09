@@ -1,3 +1,4 @@
+import { toaster } from 'evergreen-ui';
 import GenericService, { ResponseTest } from './generic_service';
 
 export interface Person {
@@ -28,7 +29,7 @@ const employeeService = new GenericService('/funcionarios');
 export async function getAllClients() {
 
     try {
-        const response = await clientService.api.get('');
+        const response = await clientService.api.get('?size=200');
         const data: ResponseTest = response.data;
 
         var returnList: Client[] = data.content;
@@ -40,7 +41,7 @@ export async function getAllClients() {
         return returnList ?? [];
 
     } catch (error) {
-        console.log(error);
+        toaster.danger("Erro ao buscar usuários, tente novamente mais tarde!");
     }
 
 }
@@ -85,11 +86,34 @@ export async function postEmployee(employee: Employee) {
 
     try {
         const response = await employeeService.api.post('', employee);
+        const data = response.status;
 
-        if (response.status === 200) {
-            return ''
+        if (data === 201) {
+            toaster.success("Funcionário cadastrado com sucesso!")
         }
-        else { return response.data };
+        else {
+            toaster.danger("Erro no cadastro edição, verifique os campos!");
+        }
+
+
+    } catch (error) {
+        toaster.danger("Erro no cadastro edição, verifique os campos!");
+    }
+
+}
+
+export async function editEmployee(employee: Employee) {
+
+    try {
+        const response = await employeeService.api.put(`/${employee.cpf}`, employee);
+        const data = response.status;
+
+        if (data === 200) {
+            toaster.success("Funcionário editado com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na edição, verifique os campos!");
+        }
 
 
     } catch (error) {
@@ -98,6 +122,43 @@ export async function postEmployee(employee: Employee) {
 
 }
 
+export async function postClient(client: Client) {
+
+    try {
+        const response = await clientService.api.post('', client);
+        const data = response.status;
+
+        if (data === 201) {
+            toaster.success("Funcionário cadastrado com sucesso!")
+        }
+        else {
+            toaster.danger("Erro no cadastro, verifique os campos!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro no cadastro, verifique os campos!");
+    }
+
+}
+
+export async function editClient(client: Client) {
+
+    try {
+        const response = await clientService.api.put(`/${client.cpf}`, client);
+        const data = response.status;
+
+        if (data === 200) {
+            toaster.success("Cliente editado com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na edição, verifique os campos!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro na edição, verifique os campos!");
+    }
+
+}
 
 export async function getAllEmployees() {
 
@@ -112,10 +173,49 @@ export async function getAllEmployees() {
         return returnList ?? [];
 
     } catch (error) {
-        console.log(error);
+        toaster.danger("Erro ao buscar usuários, tente novamente mais tarde!");
     }
 
 }
+
+export async function deleteEmployee(cpf: string): Promise<any> {
+
+    try {
+        const response = await employeeService.api.delete(`/${cpf}`);
+        const data = response.status;
+
+        if (data === 204) {
+            toaster.success("Funcionário excluído com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na exclusão!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro na exclusão, tente novamente mais tarde!");
+    }
+
+}
+
+export async function deleteClient(cpf: string): Promise<any> {
+
+    try {
+        const response = await clientService.api.delete(`/${cpf}`);
+        const data = response.status;
+
+        if (data === 204) {
+            toaster.success("Cliente excluído com sucesso!")
+        }
+        else {
+            toaster.danger("Erro na exclusão!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro na exclusão, tente novamente mais tarde!");
+    }
+
+}
+
 
 export async function getPhoneNumber(cpf: string) {
 
