@@ -1,8 +1,13 @@
+import { defaultTheme, ThemeProvider } from 'evergreen-ui';
+
 import { MainScreen } from './screens';
 
 function App() {
 
-  return <MainScreen />;
+
+  return (
+      <MainScreen />
+  );
 }
 
 export default App;

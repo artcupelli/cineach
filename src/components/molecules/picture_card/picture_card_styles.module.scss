@@ -1,4 +1,48 @@
 .container {
+    flex: 1;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-width: 300px;
+    display: flex;
+    border-radius: 15px 15px 0 15px;
+    margin: 0 20px 10px 0;
+    transition: all 1s;
+
+    .gradient_container {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(121, 9, 9, 0) 55%, rgba(255, 0, 0, 0) 100%);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 15px 15px 0 15px;
+        transition: all 0.5s;
+
+        .add_container {
+            visibility: hidden;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .text_container {
+            padding: 20px;
+        }
+    }
+}
+
+.container:hover {
+    .gradient_container {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(121, 9, 9, 0) 55%, red);
+
+        .add_container {
+            visibility: visible;
+            cursor: pointer;
+        }
+    }
+}
+
+.animation_container {
     height: 500px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -30,7 +74,7 @@
     }
 }
 
-.container:hover {
+.animation_container:hover {
     min-width: 50%;
     transition: all 1s;
 

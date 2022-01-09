@@ -10,24 +10,29 @@ import { Colors } from '../../../theme/colors';
 
 import { Link } from 'react-router-dom';
 
+import { Tooltip } from 'evergreen-ui';
 
-const MenuItem: React.FC<MenuItemProps> = ({ icon, selected = false, onPress = () => { }, route }) => {
+
+const MenuItem: React.FC<MenuItemProps> = ({ icon, selected = false, onPress = () => { }, route, title }) => {
 
     return (
 
-        <Link to={route ?? "*"}>
-            <div
-                className={styles[selected ? 'container_selected' : 'container']}
-                onClick={() => { onPress(route) }}
-            >
-                <Icon
-                    path={icon}
-                    color={selected ? Colors.red : Colors.white}
-                    size={1.2}
-                />
+        <Tooltip content={title}>
+            <Link to={route ?? "*"}>
+                <div
+                    className={styles[selected ? 'container_selected' : 'container']}
+                    onClick={() => { onPress(route) }}
+                >
+                    <Icon
+                        path={icon}
+                        color={selected ? Colors.red : Colors.white}
+                        size={1.2}
+                    />
 
-            </div>
-        </Link>
+                </div>
+            </Link>
+        </Tooltip>
+
     );
 }
 

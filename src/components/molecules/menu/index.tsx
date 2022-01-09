@@ -29,6 +29,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/"
                 selected={isItemSelected("/")}
+                title="Home"
             />
 
             <MenuItem
@@ -36,6 +37,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/products"
                 selected={isItemSelected('/products')}
+                title="Produtos"
             />
 
             <MenuItem
@@ -43,6 +45,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/films"
                 selected={isItemSelected('/films')}
+                title="Filmes"
             />
 
             <MenuItem
@@ -50,6 +53,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/sessions"
                 selected={isItemSelected('/sessions')}
+                title="Sessões"
             />
 
             <MenuItem
@@ -57,6 +61,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/sales"
                 selected={isItemSelected('/sales')}
+                title="Vendas"
             />
 
             <MenuItem
@@ -64,6 +69,7 @@ const Menu: React.FC = () => {
                 onPress={setSelectedMenuItem}
                 route="/people"
                 selected={isItemSelected('/people')}
+                title="Pessoas"
             />
 
         </div>

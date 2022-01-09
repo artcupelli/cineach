@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Header, PictureCard } from '../../components/molecules';
 
@@ -6,57 +6,53 @@ import styles from './films_screen_style.module.scss';
 
 import { Icons } from '../../theme/icons';
 
+import { Film, getAllFilms } from '../../services/films_service';
+import { Spinner } from 'evergreen-ui';
+
 
 const FilmsScreen: React.FC = () => {
+
+  const [films, setFilms] = useState<Film[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+
+  async function searchAllFilms() {
+    const response = await getAllFilms();
+    setFilms(response || []);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    searchAllFilms();
+  }, [])
+
   return (
     <div className={styles['container']}>
-      
+
       <Header
         title='Filmes'
         icon={Icons.film}
       />
 
       <div className={styles['films_container']}>
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <PictureCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
+        {
+          isLoading
+            ?
+            <Spinner />
+            :
+            films?.map((f) => {
+              return (
+                <PictureCard
+                  title={f.titulo}
+                  description={`${f.diretor}, ${f.duracao}min (${f.anoDeLancamento})`}
+                  pictureUrl={f.poster}
+                  animation={false}
+                />
+              )
+            }
+
+            )
+        }
       </div>
     </div>
   );

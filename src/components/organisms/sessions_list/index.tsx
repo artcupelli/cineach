@@ -1,10 +1,30 @@
-import React from 'react';
+
+import { Spinner } from 'evergreen-ui';
+import React, { useEffect, useState } from 'react';
+
+import { getAllSessions, Session } from '../../../services/sessions_service';
 
 import { OutlineCard, SectionHeader } from '../../molecules';
 
 import styles from './sessions_list_style.module.scss';
 
+
 const SessionsList: React.FC = () => {
+
+    const [sessions, setSessions] = useState<Session[]>([]);
+    const [isLoading, setLoading] = useState<boolean>(true);
+
+    async function searchAll() {
+        const response = await getAllSessions();
+        setSessions(response || []);
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        searchAll();
+    }, [])
+
+
     return (
         <div className={styles['container']}>
             <SectionHeader
@@ -16,31 +36,23 @@ const SessionsList: React.FC = () => {
 
 
             <div className={styles['sessions_container']}>
-                <OutlineCard
-                    leftText='Coraline (2009)'
-                    middleText='Sala 01'
-                    rightText='22:00'
-                />
-                <OutlineCard
-                    leftText='Spider-Man (2019)'
-                    middleText='Sala 01'
-                    rightText='21:00'
-                />
-                <OutlineCard
-                    leftText='Túmulo dos Vagalumes (1988)'
-                    middleText='Sala 01'
-                    rightText='14:00'
-                />
-                <OutlineCard
-                    leftText='Coraline (2009)'
-                    middleText='Sala 01'
-                    rightText='22:00'
-                />
-                <OutlineCard
-                    leftText='Spider-Man (2019)'
-                    middleText='Sala 01'
-                    rightText='21:00'
-                />
+
+                {
+                    isLoading
+                    ?
+                    <Spinner/>
+                    :
+                    sessions.map((s)=>{
+                        return(
+                            <OutlineCard
+                            leftText={s.tituloFilme}
+                            middleText={`Sala ${s.numSala}`}
+                            rightText={s.horarioInicio.substring(0,5)}
+                            />
+                        )
+                    })
+                }
+               
             </div>
         </div>
     );

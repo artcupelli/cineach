@@ -1,6 +1,6 @@
 export default interface SessionCardProps {
     title: string, 
     description: string,
-    pictureUrl: string,
+    year: number,
     animation?: boolean
 }

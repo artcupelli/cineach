@@ -42,10 +42,19 @@ const PersonCard: React.FC<PersonCardProps> = ({
                             <Detail>Email</Detail>
                             <Text color={Colors.darkGray}>{email}</Text>
                         </div>
-                        <div className={styles['info']}>
-                            <Detail>Telefone</Detail>
-                            <Text color={Colors.darkGray}>{phone}</Text>
-                        </div>
+                        {
+                            (phone.length > 0) &&
+                            <div className={styles['info']}>
+                                <Detail>Telefone</Detail>
+                                {
+                                    phone.map((p)=>{
+                                        return <Text key={p+1} color={Colors.darkGray}>{(p)}</Text>
+                                    })
+                                }
+                                
+                            </div>
+                        }
+
                         {
                             position &&
                             <div className={styles['info']}>

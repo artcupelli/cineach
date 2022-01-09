@@ -1,8 +1,12 @@
-import React from 'react';
+import { Spinner } from 'evergreen-ui';
+
+import React, { useEffect, useState } from 'react';
 
 import { Header } from '../../components/molecules';
 
 import SessionCard from "../../components/molecules/session_card";
+
+import { getAllSessions, Session } from '../../services/sessions_service';
 
 import { Icons } from '../../theme/icons';
 
@@ -10,9 +14,29 @@ import styles from './sessions_screen_style.module.scss';
 
 
 const SessionScreen: React.FC = () => {
+
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  async function searchAll() {
+    const response = await getAllSessions();
+    setSessions(response || []);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    searchAll();
+  }, []);
+
+  function formatDate(dateToFormat: string): string {
+    const date = new Date(dateToFormat);
+    return `${date.getDate()}/${date.getMonth()}`;
+  }
+
   return (
 
     <div className={styles['container']}>
+
 
       <Header
         title='Sessões'
@@ -20,32 +44,23 @@ const SessionScreen: React.FC = () => {
       />
 
       <div className={styles['sessions_container']}>
-        <SessionCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <SessionCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
+        {
+          isLoading
+            ?
+            <Spinner />
+            :
+            sessions.map((s) => {
+              return (
+                <SessionCard
+                  title={s.tituloFilme}
+                  description={`${formatDate(s.data)} às ${s.horarioInicio.substring(0,5)}   Sala ${s.numSala}`}
+                  year={s.anoFilme}
+                />
+              )
+            })
+        }
 
-        <SessionCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <SessionCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
-        <SessionCard
-          title="Spider-Man (2019)"
-          description="17/12 às 22:00    Sala 01"
-          pictureUrl="https://image.api.playstation.com/vulcan/img/rnd/202011/0714/vuF88yWPSnDfmFJVTyNJpVwW.png"
-        />
+
       </div>
 
     </div>

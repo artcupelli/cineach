@@ -9,7 +9,7 @@
 
     .container {
         width: 100%;
-        min-width: 180px;
+        min-width: 200px;
         max-width: 250px;
         transition: transform 0.6s;
         transform-style: preserve-3d;
@@ -28,6 +28,7 @@
             position: absolute;
             flex: 1;
             height: 90%;
+            width: 85%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
         }
@@ -35,7 +36,6 @@
         .back {
             background-color: $lightGray;
             transform: rotateY(180deg);
-            width: 85%;
             flex-direction: column;
             display: flex;
             border-radius: 10px;

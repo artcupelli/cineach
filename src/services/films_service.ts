@@ -1,6 +1,6 @@
-import GenericService from "./generic_service";
+import GenericService, { ResponseTest } from "./generic_service";
 
-interface Film {
+export interface Film {
     titulo: string,
     anoDeLancamento: number,
     diretor: string,
@@ -15,8 +15,21 @@ export async function getAllFilms() {
 
     try {
         const response = await filmService.api.get('');
-        const filmes: Film[] = response.data;
-        return filmes;
+        const data: ResponseTest = response.data;
+        return (data.content) as Film[] ?? [];
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export async function getFilm(title: string, year: number) {
+
+    try {
+        const response = await filmService.api.get(`/${title}/ano/${year}`);
+        const data: Film = response.data;
+        return (data) as Film ?? undefined;
 
     } catch (error) {
         console.log(error);
