@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Header } from '../../components/molecules';
 
@@ -8,8 +8,27 @@ import { Icons } from '../../theme/icons';
 
 import SubtileTextCard from '../../components/molecules/subtile_text_card';
 
+import { getAllProducts, Product } from '../../services/products_services';
+
+import { Spinner } from 'evergreen-ui';
+
 
 const ProductsScreen: React.FC = () => {
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function searchAll() {
+      const response = await getAllProducts();
+      setProducts(response || []);
+      setLoading(false);
+    }
+
+    searchAll();
+  }, []);
+
+
   return (
     <div className={styles['container']}>
 
@@ -25,78 +44,19 @@ const ProductsScreen: React.FC = () => {
           rightSubtitle='R$ 17.90'
         />
 
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Refrigerante de Uva Super'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
+        {
+          isLoading
+            ?
+            <Spinner />
+            :
+            products.map((p, index) => {
+              return <SubtileTextCard
+                subtitle={p.nome}
+                text={p.tamanho}
+                rightSubtitle={`R$ ${p.precoUnidade}`}
+              />
+            })
+        }
 
 
       </div>
