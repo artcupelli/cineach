@@ -33,10 +33,9 @@ export async function getAllClients() {
 
         var returnList: Client[] = data.content;
 
-        (returnList).map(async (c) => {
-            c.telefones = await getPhoneNumber(c.cpf) || [];
-            return;
-        });
+        (returnList).map(async (c) => (
+            c.telefones = await getPhoneNumber(c.cpf) || []
+        ));
 
         return returnList ?? [];
 
@@ -50,9 +49,11 @@ export async function postEmployee(employee: Employee) {
 
     try {
         const response = await employeeService.api.post('', employee);
-        
-        if(response.status = 200) return '';
-        else return response.data;
+
+        if (response.status === 200) {
+            return ''
+        }
+        else { return response.data };
 
 
     } catch (error) {
@@ -69,10 +70,8 @@ export async function getAllEmployees() {
         const data: ResponseTest = response.data;
         var returnList: Employee[] = data.content;
 
-        (returnList).map(async (c) => {
-            c.telefones = await getPhoneNumber(c.cpf) || [];
-            return;
-        });
+        (returnList).map(async (c) => (
+            c.telefones = await getPhoneNumber(c.cpf) || []));
 
         return returnList ?? [];
 
@@ -92,10 +91,8 @@ export async function getPhoneNumber(cpf: string) {
 
         var returnList: string[] = [];
 
-        (data.content as Phone[]).map((p) => {
-            returnList.push(p.numero);
-            return;
-        })
+        (data.content as Phone[]).map((p) => (
+            returnList.push(p.numero)));
 
         return returnList;
 

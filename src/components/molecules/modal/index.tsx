@@ -6,8 +6,6 @@ import redMonsterImage from '../../../assets/images/red_monster.png';
 
 import ModalProps from './modal_props';
 
-import { Subtitle } from '../../atoms';
-
 import { Dialog } from 'evergreen-ui';
 
 

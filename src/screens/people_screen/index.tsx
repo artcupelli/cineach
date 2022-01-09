@@ -2,7 +2,7 @@ import { Tablist, Tab, Pane, Spinner } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
-import { Header, Modal, PersonCard } from '../../components/molecules';
+import { Header, PersonCard } from '../../components/molecules';
 
 import { ModalAddEmployee } from '../../components/organisms';
 

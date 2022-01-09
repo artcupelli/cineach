@@ -20,15 +20,16 @@ const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, desc
     const [isLoading, setLoading] = useState<boolean>(true);
     const [filmUrl, setFilmUrl] = useState<string>();
 
-    const getFilmUrl = async () => {
-        const response = await getFilm(title, year);
-        setFilmUrl(response?.poster || "");
-        setLoading(false);
-    }
 
     useEffect(() => {
+        const getFilmUrl = async () => {
+            const response = await getFilm(title, year);
+            setFilmUrl(response?.poster || "");
+            setLoading(false);
+        }
+
         getFilmUrl();
-    }, [])
+    }, [title, year])
 
 
     return (

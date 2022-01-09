@@ -16,7 +16,6 @@ import styles from './modal_add_employee_styles.module.scss';
 const ModalAddEmployee: React.FC = () => {
 
     const [phones, setPhones] = useState<string[]>([]);
-    const [isLoading, setLoading] = useState<boolean>(false);
 
     const initialValues: Employee = {
         nome: '',
