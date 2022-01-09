@@ -42,7 +42,7 @@ const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = 
             {
                 photo ?
                     <div className={styles['pic_container']}>
-                        <ProfilePic pictureUrl='https://i.pinimg.com/originals/8e/4b/a1/8e4ba1eed0ef14361513776aeeb7ec3c.jpg' />
+                        <ProfilePic pictureUrl='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png' />
                     </div>
                     : null
             }
