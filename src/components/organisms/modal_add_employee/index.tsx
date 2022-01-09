@@ -1,8 +1,8 @@
 import { Spinner, TagInput, TextInputField } from 'evergreen-ui';
 
-import { Formik, useFormik } from 'formik';
+import { Formik } from 'formik';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { editEmployee, Employee, postEmployee } from '../../../services/people_service';
 
@@ -17,13 +17,15 @@ import styles from './modal_add_employee_styles.module.scss';
 
 const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => { }, employee = undefined, edit = false }) => {
 
-    const values: Employee = {
-        nome: '',
-        cargo: '',
-        cpf: '',
-        email: '',
-        telefones: []
-    }
+    const values: Employee = useMemo(() => {
+        return {
+            nome: '',
+            cargo: '',
+            cpf: '',
+            email: '',
+            telefones: []
+        }
+    }, []);
 
     const [isLoading, setLoading] = useState<boolean>(true);
     const [phones, setPhones] = useState<string[]>(employee?.telefones || []);
@@ -34,14 +36,7 @@ const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = ()
         setPhones(employee?.telefones || []);
         setInitialValues(employee || values);
         setLoading(false);
-    }, [employee]);
-
-    useEffect(() => {
-        setLoading(true);
-        setPhones(employee?.telefones || []);
-        setInitialValues(employee || values);
-        setLoading(false);
-    }, []);
+    }, [employee, values]);
 
 
     return (
@@ -55,7 +50,7 @@ const ModalAddEmployee: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = ()
                         <Formik
                             initialValues={initialValues}
                             onSubmit={async (values) => {
-                                const response = edit ? await editEmployee(values) : await postEmployee(values);
+                                edit ? await editEmployee(values) : await postEmployee(values);
                                 onClose();
                             }}
                             enableReinitialize

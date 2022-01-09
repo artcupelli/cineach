@@ -1,8 +1,8 @@
-import { Spinner, TextInputField, toaster } from 'evergreen-ui';
+import { Spinner, TextInputField } from 'evergreen-ui';
 
 import { Formik } from 'formik';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../../atoms';
 
@@ -17,13 +17,15 @@ import { editProduct, postProduct, Product } from '../../../services/products_se
 
 const ModalAddProduct: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => { }, edit = false, product }) => {
 
-    const values: Product = {
-        codigoBarras: 0,
-        nome: '',
-        precoUnidade: 0,
-        quantidadeDisponivel: 0,
-        tamanho: ''
-    }
+    const values: Product = useMemo(() => {
+        return {
+            codigoBarras: 0,
+            nome: '',
+            precoUnidade: 0,
+            quantidadeDisponivel: 0,
+            tamanho: ''
+        }
+    }, []);
 
 
     const [isLoading, setLoading] = useState<boolean>(true);
@@ -33,15 +35,8 @@ const ModalAddProduct: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
         setLoading(true);
         setInitialValues(product || values);
         setLoading(false);
-    }, [product]);
+    }, [product, values]);
 
-    useEffect(() => {
-        setLoading(true);
-        setInitialValues(product || values);
-        setLoading(false);
-    }, []);
-
-    console.log(product)
 
     return (
         <Modal isOpen={isOpen} title='Filme' close={onClose} >
@@ -54,7 +49,7 @@ const ModalAddProduct: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                         <Formik
                             initialValues={initialValues}
                             onSubmit={async (values) => {
-                                const response = edit ? await editProduct(values) : await postProduct(values);
+                                edit ? await editProduct(values) : await postProduct(values);
                                 onClose();
                             }}
                             enableReinitialize

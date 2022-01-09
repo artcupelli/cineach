@@ -1,8 +1,8 @@
-import { Spinner, TextInputField, toaster } from 'evergreen-ui';
+import { Spinner, TextInputField } from 'evergreen-ui';
 
 import { Formik } from 'formik';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../../atoms';
 
@@ -17,13 +17,16 @@ import { editFilm, Film, postFilm } from '../../../services/films_service';
 
 const ModalAddFilm: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => { }, edit = false, film }) => {
 
-    const values: Film = {
-        titulo: '',
-        diretor: '',
-        anoDeLancamento: 0,
-        duracao: 0,
-        poster: ''
-    }
+    const values: Film = useMemo(() => {
+        return {
+            titulo: '',
+            diretor: '',
+            anoDeLancamento: 0,
+            duracao: 0,
+            poster: ''
+        }
+    },
+        []);
 
     const [isLoading, setLoading] = useState<boolean>(true);
     const [initialValues, setInitialValues] = useState<Film>(film || {} as Film);
@@ -32,13 +35,8 @@ const ModalAddFilm: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => 
         setLoading(true);
         setInitialValues(film || values);
         setLoading(false);
-    }, [film]);
+    }, [film, values]);
 
-    useEffect(() => {
-        setLoading(true);
-        setInitialValues(film || values);
-        setLoading(false);
-    }, []);
 
     console.log(film)
 
@@ -53,7 +51,7 @@ const ModalAddFilm: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => 
                         <Formik
                             initialValues={initialValues}
                             onSubmit={async (values) => {
-                                const response = edit ? await editFilm(values) : await postFilm(values);
+                                edit ? await editFilm(values) : await postFilm(values);
                                 onClose();
                             }}
                             enableReinitialize

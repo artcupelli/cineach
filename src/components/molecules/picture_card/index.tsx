@@ -23,11 +23,6 @@ const PictureCard: React.FC<PictureCardProps> = ({ description, title, pictureUr
         >
             <div className={styles['gradient_container']}>
                 <div className={styles['add_container']}>
-                    <div onClick={() => { onAdd() }}>
-                        <Tooltip content="Adicionar no carrinho" >
-                            <Icon path={Icons.add} size={2} color={Colors.white} />
-                        </Tooltip>
-                    </div>
                     {
                         !animation &&
                         (

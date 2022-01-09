@@ -1,11 +1,17 @@
-import createSagaMiddleware from "@redux-saga/core";
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, createStore, Store } from "redux";
+
+import createSagaMiddleware from "redux-saga";
+
+import { Cart } from "./actions/cart_actions";
+
+import reducer, { CartAction, DispatchType } from "./reducers/cart_reducer";
 
 
 const sagaMiddleware = createSagaMiddleware();
+const store: Store<Cart, CartAction> & {
+    dispatch: DispatchType
+} = createStore(reducer, applyMiddleware(sagaMiddleware))
+  
+// sagaMiddleware.run();
 
-// const store = createStore([], applyMiddleware(sagaMiddleware));
-
-// sagaMiddleware.run([]);
-
-// export default store;
+export default store;

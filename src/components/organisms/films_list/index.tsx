@@ -17,7 +17,8 @@ const FilmsList: React.FC = () => {
 
 
     async function searchAllFilms() {
-        const response = await getAllFilms();
+        const response = await getAllFilms();;
+        // const response = await getShowingFilms();
         setFilms(response || []);
         setLoading(false);
     }

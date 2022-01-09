@@ -8,7 +8,7 @@ import { Icons } from '../../theme/icons';
 
 import { deleteFilm, Film, getAllFilms } from '../../services/films_service';
 
-import { CornerDialog, Spinner, toaster } from 'evergreen-ui';
+import { CornerDialog, Spinner } from 'evergreen-ui';
 
 import { ModalAddMovie } from '../../components/organisms';
 
@@ -50,7 +50,7 @@ const FilmsScreen: React.FC = () => {
         cancelLabel='Cancelar'
         onConfirm={async () => {
 
-          const response = await deleteFilm(selDeleteMovie.titulo, selDeleteMovie.anoDeLancamento);
+          await deleteFilm(selDeleteMovie.titulo, selDeleteMovie.anoDeLancamento);
           setDelMovie({} as Film);
           setAdded(!added)
 

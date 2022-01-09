@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import { Header } from '../../components/molecules';
 
@@ -11,7 +11,12 @@ import SubtileTextCard from '../../components/molecules/subtile_text_card';
 import { deleteProduct, getAllProducts, Product } from '../../services/products_services';
 
 import { CornerDialog, Spinner } from 'evergreen-ui';
+
 import ModalAddProduct from '../../components/organisms/modal_add_product';
+
+import { useDispatch } from 'react-redux';
+
+import { addProduct, SaleProduct } from '../../store/actions/cart_actions';
 
 
 const ProductsScreen: React.FC = () => {
@@ -23,6 +28,12 @@ const ProductsScreen: React.FC = () => {
   const [editProduct, setEditProduct] = useState<Product>({} as Product);
   const [selDeleteProduct, setDelProduct] = useState<Product>({} as Product);
 
+
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const addProductToCart = useCallback(
+    (product: SaleProduct) => dispatch(addProduct(product)), [dispatch]
+  );
 
   useEffect(() => {
     async function searchAll() {
@@ -53,7 +64,7 @@ const ProductsScreen: React.FC = () => {
         cancelLabel='Cancelar'
         onConfirm={async () => {
 
-          const response = await deleteProduct(selDeleteProduct.codigoBarras);
+          await deleteProduct(selDeleteProduct.codigoBarras);
           setDelProduct({} as Product);
           setAdded(!added)
 
@@ -71,12 +82,6 @@ const ProductsScreen: React.FC = () => {
       />
 
       <div className={styles['products_container']}>
-        <SubtileTextCard
-          subtitle='Pipoca'
-          text='500g'
-          rightSubtitle='R$ 17.90'
-        />
-
         {
           isLoading
             ?
@@ -89,6 +94,7 @@ const ProductsScreen: React.FC = () => {
                 rightSubtitle={`R$ ${p.precoUnidade}`}
                 onDelete={() => { setDelProduct(p) }}
                 onEdit={() => { setEditProduct(p); setModalOpen(true) }}
+                onAdd={() => { var sp: SaleProduct = { ...p, quantidade: 1 }; addProductToCart(sp); }}
               />
             })
         }

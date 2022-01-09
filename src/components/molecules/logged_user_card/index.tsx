@@ -1,6 +1,12 @@
 import Icon from '@mdi/react';
 
-import React from 'react';
+import { toaster } from 'evergreen-ui';
+
+import React, { Dispatch, useCallback } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { removeClient } from '../../../store/actions/cart_actions';
 
 import { Colors } from '../../../theme/colors';
 
@@ -14,10 +20,17 @@ import styles from './logged_user_card_style.module.scss';
 
 
 const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = Icons.logout, photo = true }) => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const removeClientToCart = useCallback(
+        () => dispatch(removeClient()), [dispatch]
+    );
+
     return (
         <div className={styles['container']}>
 
-            <div className={styles['icon_container']}>
+            <div className={styles['icon_container']} onClick={() => { removeClientToCart(); toaster.success('Cliente retirado da compra!') }}>
                 <Icon path={icon} size={1.2} color={Colors.red} />
             </div>
 
@@ -33,8 +46,6 @@ const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = 
                     </div>
                     : null
             }
-
-
 
         </div>
     );

@@ -25,10 +25,49 @@ export async function getAllFilms() {
 
 }
 
+export async function getShowingFilms() {
+
+    try {
+        const response = await filmService.api.get('/cartaz?size=200');
+        const data: ResponseTest = response.data;
+        return (data.content) as Film[] ?? [];
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export async function getFilm(title: string, year: number) {
 
     try {
         const response = await filmService.api.get(`/${title}/ano/${year}`);
+        const data: Film = response.data;
+        return (data) as Film ?? undefined;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export async function getFilmMostWatched() {
+
+    try {
+        const response = await filmService.api.get(`/maisassistido`);
+        const data: Film = response.data;
+        return (data) as Film ?? undefined;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export async function getFilmLeastWatched() {
+
+    try {
+        const response = await filmService.api.get(`/menosassistido`);
         const data: Film = response.data;
         return (data) as Film ?? undefined;
 
@@ -48,12 +87,12 @@ export async function deleteFilm(title: string, year: number) {
             toaster.success("Filme excluído com sucesso!")
         }
         else {
-            toaster.danger("Erro na exclusão, filme pode contém ingressos!");
+            toaster.danger("Erro na exclusão, filme pode conter ingressos!");
         }
          
 
     } catch (error) {
-        toaster.danger("Erro na exclusão, filme pode contém ingressos!");
+        toaster.danger("Erro na exclusão, filme pode conter ingressos!");
     }
 
 }

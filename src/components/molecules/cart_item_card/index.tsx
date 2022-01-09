@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Detail, Text } from '../../atoms';
 
@@ -13,9 +13,7 @@ import { Icons } from '../../../theme/icons';
 import CartItemCardProps from './cart_item_card_props';
 
 
-const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, text, price = true }) => {
-
-    const [qnt, setQnt] = useState<number>(1);
+const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, text, price = true, qntd =1, add = ()=>{}, remove = () =>{}  }) => {
 
 
     return (
@@ -37,7 +35,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, te
 
             <div className={styles['quantity_container']}>
 
-                <div onClick={()=>{setQnt(qnt-1)}}>
+                <div onClick={()=>{remove()}}>
                     <Icon
                         path={Icons.minus}
                         size={1.1}
@@ -48,10 +46,10 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ subtitle, rightSubtitle, te
 
 
                 <div className={styles['quantity']}>
-                    <Text color={Colors.gray}>{qnt.toString()}</Text>
+                    <Text color={Colors.gray}>{qntd.toString()}</Text>
                 </div>
 
-                <div onClick={()=>{setQnt(qnt+1)}}>
+                <div onClick={()=>{add()}}>
                     <Icon
                         path={Icons.add}
                         size={1.1}

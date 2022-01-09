@@ -1,5 +1,6 @@
 
 import { Spinner } from 'evergreen-ui';
+
 import React, { useEffect, useState } from 'react';
 
 import { getAllSessions, Session } from '../../../services/sessions_service';
@@ -16,6 +17,7 @@ const SessionsList: React.FC = () => {
 
     async function searchAll() {
         const response = await getAllSessions();
+        // const response = await getTodaySessions();
         setSessions(response || []);
         setLoading(false);
     }

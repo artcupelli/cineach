@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { LoggedUserCard } from '..';
 
@@ -15,8 +15,12 @@ import { Colors } from '../../../theme/colors';
 
 const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalSearchCliente }) => {
 
-  const [nameState] = useState<string>(name);
+  const [nameState, setName] = useState<string>(name);
 
+  useEffect(() => {
+    setName(name);
+  },
+    [name]);
 
   return (
     <div className={styles['container']}>
@@ -35,16 +39,7 @@ const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalS
             </Detail>
 
             <Button onClick={openModalSearchCliente}>SELECIONAR CLIENTE</Button>
-            {/* 
-            <Modal
-              isOpen={isModalOpen}
-              title='BUSCAR CLIENTE'
-            >
-              <SearchClientForms
 
-                closeModal={() => { setIsModalOpen(false) }}
-              />
-            </Modal> */}
 
           </div>
       }

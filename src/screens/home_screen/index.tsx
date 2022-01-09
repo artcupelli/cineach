@@ -1,11 +1,10 @@
 import { Alert } from 'evergreen-ui';
-import React, { useEffect } from 'react';
+
+import React from 'react';
 
 import { Header } from '../../components/molecules';
 
 import { FilmsList, SessionsList } from '../../components/organisms';
-
-import { getAllFilms } from '../../services/films_service';
 
 import styles from './home_screen_style.module.scss';
 

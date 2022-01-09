@@ -10,7 +10,8 @@ import {
     mdilLogin,
     mdilDelete,
     mdilMinus,
-    mdilArrowLeft
+    mdilArrowLeft,
+    mdilTelevision
 } from '@mdi/light-js';
 
 
@@ -26,5 +27,6 @@ export const Icons = {
     add: mdilPlus,
     trash: mdilDelete,
     minus: mdilMinus,
-    back: mdilArrowLeft
+    back: mdilArrowLeft,
+    room: mdilTelevision
 }

@@ -59,7 +59,7 @@ export async function getClient(cpf: string) {
         return client;
 
     } catch (error) {
-        console.log(error);
+        toaster.danger("Cliente não existe! Tente outro CPF!")
     }
 
 }

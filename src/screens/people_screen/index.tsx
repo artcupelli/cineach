@@ -2,8 +2,6 @@ import { Tablist, Tab, Pane, Spinner, CornerDialog } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
-import { Button } from '../../components/atoms';
-
 import { Header, PersonCard } from '../../components/molecules';
 
 import { ModalAddClient, ModalAddEmployee } from '../../components/organisms';

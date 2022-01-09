@@ -1,4 +1,9 @@
 .container{
     max-height: 60vh;
     overflow-y: auto;
+
+    .cart_empty {
+        margin-top: 15px;
+        text-align: center;
+    }
 }

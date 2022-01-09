@@ -17,7 +17,20 @@ const sessionService = new GenericService('/sessoes');
 export async function getAllSessions() {
 
     try {
-        const response = await sessionService.api.get('');
+        const response = await sessionService.api.get('?size=200');
+        const data: ResponseTest = response.data;
+        return (data.content) as Session[] ?? [];
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export async function getTodaySessions() {
+
+    try {
+        const response = await sessionService.api.get('/hoje?size=200');
         const data: ResponseTest = response.data;
         return (data.content) as Session[] ?? [];
 

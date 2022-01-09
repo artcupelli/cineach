@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Routes, Route } from 'react-router-dom';
-import { FilmsScreen, HomeScreen, PeopleScreen, ProductsScreen, SalesScreen, SessionsScreen } from '../screens';
+
+import { FilmsScreen, HomeScreen, PeopleScreen, ProductsScreen, RoomsScreen, SalesScreen, SessionsScreen } from '../screens';
 
 
 const LoggedRoutes: React.FC = () => {
@@ -14,6 +15,7 @@ const LoggedRoutes: React.FC = () => {
             <Route path="sessions" element={<SessionsScreen/>} />
             <Route path="sales" element={<SalesScreen/>} />
             <Route path="people" element={<PeopleScreen/>} />
+            <Route path="rooms" element={<RoomsScreen/>} />
             <Route path="*" element={<h1>Nada por aqui...</h1>} />
         </Routes>
     );

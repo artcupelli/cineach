@@ -1,4 +1,9 @@
 import React from 'react';
+
+import { useSelector } from 'react-redux';
+
+import { Cart } from '../../../store/actions/cart_actions';
+
 import { Button } from '../../atoms';
 
 import { ClientCard, FinalPrice, LoggedUserCard } from '../../molecules';
@@ -10,7 +15,12 @@ import CartProps from './cart_props';
 import styles from './cart_style.module.scss';
 
 
-const Cart: React.FC<CartProps> = ({ openModalSearchCliente }) => {
+const CartComponent: React.FC<CartProps> = ({ openModalSearchCliente }) => {
+
+  const cart: Cart = useSelector(
+    (state: Cart) => state
+  );
+
 
   return (
     <div className={styles['container']}>
@@ -22,8 +32,8 @@ const Cart: React.FC<CartProps> = ({ openModalSearchCliente }) => {
         />
 
         <ClientCard
-          name=''
-          cpf='441.423.213-32'
+          name={cart.cliente.nome}
+          cpf={cart.cpfCliente}
           openModalSearchCliente={openModalSearchCliente}
         />
 
@@ -32,7 +42,7 @@ const Cart: React.FC<CartProps> = ({ openModalSearchCliente }) => {
 
 
       <div>
-        <FinalPrice price='100.50' />
+        <FinalPrice price={`${cart.valorTotal.toFixed(2)}`} />
 
         <Button>FINALIZAR COMPRA</Button>
       </div>
@@ -42,4 +52,4 @@ const Cart: React.FC<CartProps> = ({ openModalSearchCliente }) => {
 
 }
 
-export default Cart;
+export default CartComponent;

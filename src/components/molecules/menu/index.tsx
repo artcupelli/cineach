@@ -72,6 +72,14 @@ const Menu: React.FC = () => {
                 title="Pessoas"
             />
 
+            <MenuItem
+                icon={Icons.room}
+                onPress={setSelectedMenuItem}
+                route="/rooms"
+                selected={isItemSelected('/rooms')}
+                title="Salas"
+            />
+
         </div>
     );
 }
