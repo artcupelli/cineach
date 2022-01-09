@@ -1,3 +1,4 @@
 export default interface SearchClientProps {
-    closeModal?: Function
+    closeModal?: Function,
+    funcionario?: boolean
 }

@@ -6,7 +6,7 @@ import React, { Dispatch, useCallback } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { removeClient } from '../../../store/actions/cart_actions';
+import { removeClient, removeEmployee } from '../../../store/actions/cart_actions';
 
 import { Colors } from '../../../theme/colors';
 
@@ -19,7 +19,7 @@ import LoggedUserCardProps from './logged_user_card_props';
 import styles from './logged_user_card_style.module.scss';
 
 
-const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = Icons.logout, photo = true }) => {
+const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = Icons.logout, photo = true, funcionario }) => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
@@ -27,10 +27,14 @@ const LoggedUserCard: React.FC<LoggedUserCardProps> = ({ name, position, icon = 
         () => dispatch(removeClient()), [dispatch]
     );
 
+    const removeEmployeeToCart = useCallback(
+        () => dispatch(removeEmployee()), [dispatch]
+    );
+
     return (
         <div className={styles['container']}>
 
-            <div className={styles['icon_container']} onClick={() => { removeClientToCart(); toaster.success('Cliente retirado da compra!') }}>
+            <div className={styles['icon_container']} onClick={() => { funcionario ? removeEmployeeToCart() : removeClientToCart(); toaster.success("Usuário retirado!") }}>
                 <Icon path={icon} size={1.2} color={Colors.red} />
             </div>
 

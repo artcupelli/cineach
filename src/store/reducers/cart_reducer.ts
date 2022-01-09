@@ -1,4 +1,4 @@
-import { Client } from "../../services/people_service";
+import { Client, Employee } from "../../services/people_service";
 
 import { Cart, CartActionsTypes } from "../actions/cart_actions";
 
@@ -16,7 +16,8 @@ const initialState: Cart = {
     cpfFuncionario: '',
     ingressos: [],
     valorTotal: 0,
-    cliente: {} as Client
+    cliente: {} as Client,
+    funcionario: {} as Employee
 }
 
 const reducer = (state: Cart = initialState, action: CartAction): Cart => {
@@ -35,10 +36,10 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
         // EMPLOYEE
 
         case CartActionsTypes.ADD_EMPLOYEE:
-            return { ...state, cpfFuncionario: action.payload }
+            return { ...state, cpfFuncionario: action.payload.cpf, funcionario: action.payload }
 
         case CartActionsTypes.REMOVE_EMPLOYEE:
-            return { ...state, cpfFuncionario: '' }
+            return { ...state, cpfFuncionario: '', funcionario: {} as Employee }
 
 
         // PRODUCT

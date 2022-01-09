@@ -15,7 +15,7 @@ import { Colors } from '../../../theme/colors';
 import { SearchClientForms } from '../../organisms';
 
 
-const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalSearchCliente }) => {
+const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', funcionario = false }) => {
 
   const [nameState, setName] = useState<string>(name);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -34,18 +34,30 @@ const ClientCard: React.FC<ClientCardProps> = ({ cpf = '', name = '', openModalS
             name={nameState}
             position={cpf || 'CPF não cadastrado'}
             icon={Icons.trash}
+            funcionario={funcionario}
           />
           :
           <div className={styles['no_client_container']}>
-            <Detail color={Colors.gray} fontWeight={300}>
-              Nenhum cliente selecionado...
-            </Detail>
-
-            <Modal isOpen={modalVisible} close={() => { setModalVisible(false) }} title='Buscar cliente' >
-              <SearchClientForms closeModal={() => setModalVisible(false)} />
+            {
+              funcionario ?
+                <Detail color={Colors.gray} fontWeight={300}>
+                  Nenhum funcionario selecionado...
+                </Detail>
+                :
+                <Detail color={Colors.gray} fontWeight={300}>
+                  Nenhum cliente selecionado...
+                </Detail>
+            }
+            <Modal isOpen={modalVisible} close={() => { setModalVisible(false) }} title={`Buscar ${funcionario? 'funcionário' : 'cliente'}`} >
+              <SearchClientForms closeModal={() => setModalVisible(false)} funcionario={funcionario} />
             </Modal>
 
-            <Button onClick={() => setModalVisible(true)}>SELECIONAR CLIENTE</Button>
+            {
+              funcionario ?
+                <Button onClick={() => setModalVisible(true)}>SELECIONAR FUNCIONÁRIO</Button>
+                :
+                <Button onClick={() => setModalVisible(true)}>SELECIONAR CLIENTE</Button>
+            }
 
           </div>
       }

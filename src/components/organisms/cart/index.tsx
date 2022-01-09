@@ -6,7 +6,7 @@ import { Cart } from '../../../store/actions/cart_actions';
 
 import { Button } from '../../atoms';
 
-import { ClientCard, FinalPrice, LoggedUserCard } from '../../molecules';
+import { ClientCard, FinalPrice } from '../../molecules';
 
 import { ProductsCart } from '../../organisms';
 
@@ -26,9 +26,11 @@ const CartComponent: React.FC<CartProps> = ({ openModalSearchCliente }) => {
     <div className={styles['container']}>
 
       <div>
-        <LoggedUserCard
-          name='Patricia Rufino'
-          position='Gerente'
+        <ClientCard
+          funcionario
+          name={cart.funcionario.nome}
+          cpf={cart.cpfFuncionario}
+          openModalSearchCliente={openModalSearchCliente}
         />
 
         <ClientCard

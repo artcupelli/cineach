@@ -1,4 +1,4 @@
-import { Client } from "../../services/people_service";
+import { Client, Employee } from "../../services/people_service";
 
 import { Product } from "../../services/products_services";
 
@@ -18,6 +18,7 @@ export interface SaleTicket extends Ticket{
 export interface Cart {
     cpfCliente: string
     cliente: Client
+    funcionario: Employee
     cpfFuncionario: string
     acompanhamentos: SaleProduct[]
     ingressos: SaleTicket[]
@@ -64,8 +65,9 @@ export const removeClient = () => ({
 
 // EMPLOYEE
 
-export const addEmployee = () => ({
-    type: CartActionsTypes.ADD_EMPLOYEE
+export const addEmployee = (payload: Employee) => ({
+    type: CartActionsTypes.ADD_EMPLOYEE,
+    payload
 });
 
 export const removeEmployee = () => ({
