@@ -18,9 +18,9 @@ import Icon from '@mdi/react';
 
 import { Icons } from '../../../theme/icons';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { addTicket, Cart, SaleTicket } from '../../../store/actions/cart_actions';
+import { addTicket, SaleTicket } from '../../../store/actions/cart_actions';
 
 
 const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, url, onDelete = () => { }, onEdit = () => { } }) => {
