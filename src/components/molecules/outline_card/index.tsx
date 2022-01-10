@@ -9,9 +9,9 @@ import OutlineCardProps from './outline_card_props';
 import styles from './outline_card_style.module.scss';
 
 
-const OutlineCard: React.FC<OutlineCardProps> = ({ leftText, middleText, rightText }) => {
+const OutlineCard: React.FC<OutlineCardProps> = ({ leftText, middleText, rightText, onClick = () => { } }) => {
     return (
-        <div className={styles['container']}>
+        <div className={styles['container']} onClick={() => onClick()}>
             <div className={styles['left_container']}>
                 <Text color={Colors.red} fontWeight={600}>{leftText}</Text>
             </div>

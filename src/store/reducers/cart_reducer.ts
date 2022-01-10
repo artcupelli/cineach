@@ -92,14 +92,14 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
         // TICKET
 
         case CartActionsTypes.ADD_TICKET:
-            return { ...state, ingressos: state.ingressos.concat(action.payload) }
+            return { ...state, ingressos: state.ingressos.concat(action.payload), valorTotal: state.valorTotal + (action.payload.precoInteira * 1) }
 
         case CartActionsTypes.REMOVE_TICKET:
             return {
                 ...state, ingressos: state.ingressos.filter((a) => (
-                    a.dataSessao !== action.payload.dataSessao &&
-                    a.horaInicioSessao !== action.payload.horaInicioSessao &&
-                    a.numeroSalaSessao !== action.payload.numeroSalaSessao &&
+                    a.dataSessao !== action.payload.dataSessao ||
+                    a.horaInicioSessao !== action.payload.horaInicioSessao ||
+                    a.numeroSalaSessao !== action.payload.numeroSalaSessao ||
                     a.meiaEntrada !== action.payload.meiaEntrada
                 ))
             }
@@ -116,7 +116,7 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
 
             ticketsAux[indexAddT].quantidade++;
 
-            return { ...state, ingressos: ticketsAux }
+            return { ...state, ingressos: ticketsAux, valorTotal: state.valorTotal + (action.payload.precoInteira * 1) }
 
         case CartActionsTypes.REMOVE_1_TICKET:
             ticketsAux = state.ingressos;
@@ -130,7 +130,11 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
 
             ticketsAux[indexRemoveT].quantidade--;
 
-            return { ...state, ingressos: ticketsAux }
+            return { ...state, ingressos: ticketsAux, valorTotal: state.valorTotal - (action.payload.precoInteira * 1) }
+
+
+        case CartActionsTypes.END_SALE: 
+            return initialState;
 
         default:
             return { ...state };

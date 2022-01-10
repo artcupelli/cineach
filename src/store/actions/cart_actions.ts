@@ -11,7 +11,8 @@ export interface SaleProduct extends Product{
 
 export interface SaleTicket extends Ticket{
     quantidade: number,
-    filme: string
+    filme: string,
+    precoInteira: number
 
 }
 
@@ -50,6 +51,11 @@ export enum CartActionsTypes {
     ADD_1_PRODUCT = 'ADD_1_PRODUCT',
     REMOVE_1_PRODUCT = 'REMOVE_1_PRODUCT'
 }
+
+export const endSale = () => ({
+    type: CartActionsTypes.END_SALE,
+});
+
 
 // CLIENT
 

@@ -2,7 +2,7 @@ import React, { Dispatch, useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { add1Product, Cart, remove1Product, removeProduct, SaleProduct } from '../../../store/actions/cart_actions';
+import { add1Product, add1Ticket, Cart, remove1Product, remove1Ticket, removeProduct, removeTicket, SaleProduct, SaleTicket } from '../../../store/actions/cart_actions';
 
 import { Detail, Text } from '../../atoms';
 
@@ -40,13 +40,35 @@ const ProductsCart: React.FC = () => {
         (product: SaleProduct) => dispatch(removeProduct(product)), [dispatch]
     );
 
+    const addTicket = useCallback(
+        (ticket: SaleTicket) => dispatch(add1Ticket(ticket)), [dispatch]
+    );
+
+    const removeTicketAux = (ticket: SaleTicket) => {
+        if (ticket.quantidade === 1) {
+            endTicket(ticket)
+        } else {
+            subTicket(ticket)
+        }
+    }
+
+    const subTicket = useCallback(
+        (ticket: SaleTicket) => dispatch(remove1Ticket(ticket)), [dispatch]
+    );
+
+    const endTicket = useCallback(
+        (ticket: SaleTicket) => dispatch(removeTicket(ticket)), [dispatch]
+    );
+
+
+
     return (
         <div className={styles['container']}>
             <Text>Carrinho</Text>
 
             <div>
                 {
-                    cart.acompanhamentos.length === 0 &&
+                    (cart.acompanhamentos.length === 0 && cart.ingressos.length === 0) &&
                     <div className={styles['cart_empty']}>
                         <Detail fontWeight={300}>O carrinho está vazio...</Detail>
                     </div>
@@ -60,6 +82,19 @@ const ProductsCart: React.FC = () => {
                             qntd={a.quantidade}
                             add={() => { addProduct(a) }}
                             remove={() => { removeProductAux(a) }}
+                        />
+
+                    })
+                }
+                {
+                    cart.ingressos.map((a) => {
+                        return <CartItemCard
+                            subtitle={a.filme}
+                            text={`Sala ${a.numeroSalaSessao}`}
+                            rightSubtitle={`R$ ${a.precoInteira}`}
+                            qntd={a.quantidade}
+                            add={() => { addTicket(a) }}
+                            remove={() => { removeTicketAux(a) }}
                         />
 
                     })

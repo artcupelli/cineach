@@ -1,8 +1,9 @@
-import React from 'react';
+import { toaster } from 'evergreen-ui';
+import React, { Dispatch, useCallback } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Cart } from '../../../store/actions/cart_actions';
+import { Cart, endSale } from '../../../store/actions/cart_actions';
 
 import { Button } from '../../atoms';
 
@@ -21,6 +22,11 @@ const CartComponent: React.FC<CartProps> = ({ openModalSearchCliente }) => {
     (state: Cart) => state
   );
 
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const clearSale = useCallback(
+      () => dispatch(endSale()), [dispatch]
+  );
 
   return (
     <div className={styles['container']}>
@@ -46,7 +52,7 @@ const CartComponent: React.FC<CartProps> = ({ openModalSearchCliente }) => {
       <div>
         <FinalPrice price={`${cart.valorTotal.toFixed(2)}`} />
 
-        <Button>FINALIZAR COMPRA</Button>
+        <Button onClick={()=>{clearSale(); toaster.success("Compra efetuda!")}} >FINALIZAR COMPRA</Button>
       </div>
 
     </div>

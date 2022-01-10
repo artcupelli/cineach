@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import { Colors } from '../../../theme/colors';
 
@@ -17,6 +17,10 @@ import { getSession, Session } from '../../../services/sessions_service';
 import Icon from '@mdi/react';
 
 import { Icons } from '../../../theme/icons';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addTicket, Cart, SaleTicket } from '../../../store/actions/cart_actions';
 
 
 const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, url, onDelete = () => { }, onEdit = () => { } }) => {
@@ -38,6 +42,29 @@ const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, url,
 
     function formatDate(dateToFormat: string): string {
         return `${dateToFormat.substring(8, 10)}/${dateToFormat.substring(5, 7)}`;
+    }
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const addTicketToCart = useCallback(
+        (ticket: SaleTicket) => dispatch(addTicket(ticket)), [dispatch]
+    );
+
+
+    const addTicketToCartAux = (s : Session) => {
+        const ticket : SaleTicket = {
+            dataSessao: s.data,
+            filme: s.tituloFilme,
+            horaInicioSessao: s.horarioInicio,
+            meiaEntrada: false,
+            numeroSalaSessao: s.numSala,
+            quantidade: 1,
+            vendaId: 0,
+            id: 0,
+            precoInteira: s.precoInteira
+        }
+
+        addTicketToCart(ticket);
     }
 
 
@@ -67,6 +94,7 @@ const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, url,
                                             leftText={`Sala ${s.numSala}`}
                                             middleText={`${formatDate(s.data)}, às ${s.horarioInicio.substring(0, 5)}`}
                                             rightText={`R$ ${s.precoInteira}`}
+                                            onClick={() => { addTicketToCartAux(s) }}
                                         />
 
                                         <div className={styles['icon_container']} onClick={() => onEdit(s)}>
