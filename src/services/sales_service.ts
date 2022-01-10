@@ -64,15 +64,30 @@ export async function getDashboard() {
 
 }
 
-export async function postSale(s: Sale, c: Cart) {
+export async function postSale(c: Cart) {
+
+    const ticketService = new GenericService('/ingressos');
 
     try {
-        const response = await salesService.api.post('', s);
+        const response = await salesService.api.post('', { ...c, formaPagamento: 'Crédito' });
         const data = response.status;
         if (data === 201) {
             const rota = response.headers.location;
-            console.log(rota);
-            // const response2 = await salesService.api.post(`${}`, c.acompanhamentos);
+            const aux = rota.split('/');
+
+            const response2 = await salesService.api.post(`${(aux[aux.length - 1])}`, c.acompanhamentos);
+
+            if (response2.data === 200) {
+                console.log("OK2")
+                c.ingressos.forEach(async (c1) => {
+                    
+                    await ticketService.api.post('', { ...c1, vendaId: (aux[aux.length - 1]) });
+                    console.log("OK4")
+
+                });
+                toaster.danger("Compra efetuada");
+            }
+
         }
         else {
             toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
