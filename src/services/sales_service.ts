@@ -1,3 +1,5 @@
+import { toaster } from 'evergreen-ui';
+import { Cart } from '../store/actions/cart_actions';
 import GenericService, { ResponseTest } from './generic_service';
 
 import { Client, Employee, getClient, getEmployee } from './people_service';
@@ -34,8 +36,8 @@ export async function getAllSales() {
         const data: ResponseTest = response.data;
 
         var returnList: Sale[] = data.content;
-        
-        returnList.map( async (s)=>{
+
+        returnList.map(async (s) => {
             s.cliente = await getClient(s.cpfCliente);
             s.funcionario = await getEmployee(s.cpfFuncionario);
         });
@@ -60,5 +62,24 @@ export async function getDashboard() {
         console.log(error);
     }
 
+}
+
+export async function postSale(s: Sale, c: Cart) {
+
+    try {
+        const response = await salesService.api.post('', s);
+        const data = response.status;
+        if (data === 201) {
+            const rota = response.headers.location;
+            console.log(rota);
+            // const response2 = await salesService.api.post(`${}`, c.acompanhamentos);
+        }
+        else {
+            toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
+        }
+
+    } catch (error) {
+        toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
+    }
 }
 
