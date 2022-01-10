@@ -1,4 +1,4 @@
-import { Session } from "inspector";
+import { Session } from "../../../services/sessions_service";
 
 import ModalProps from "../../molecules/modal/modal_props";
 

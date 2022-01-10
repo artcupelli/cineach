@@ -1,12 +1,14 @@
 import { toaster } from "evergreen-ui";
 import GenericService, { ResponseTest } from "./generic_service";
+import { Session } from "./sessions_service";
 
 export interface Film {
     titulo: string,
     anoDeLancamento: number,
     diretor: string,
     duracao: number,
-    poster: string
+    poster: string,
+    sessoes?: Session[]
 }
 
 const filmService = new GenericService('/filmes');

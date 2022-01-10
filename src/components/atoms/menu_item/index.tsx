@@ -17,7 +17,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, selected = false, onPress = (
 
     return (
 
-        <Tooltip content={title}>
+        <Tooltip content={title} position='right'>
             <Link to={route ?? "*"}>
                 <div
                     className={styles[selected ? 'container_selected' : 'container']}

@@ -2,7 +2,7 @@ import { Spinner } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
-import { Film, getAllFilms } from '../../../services/films_service';
+import { Film, getShowingFilms } from '../../../services/films_service';
 
 import { SectionHeader, PictureCard } from '../../molecules';
 
@@ -17,8 +17,7 @@ const FilmsList: React.FC = () => {
 
 
     async function searchAllFilms() {
-        const response = await getAllFilms();;
-        // const response = await getShowingFilms();
+        const response = await getShowingFilms();
         setFilms(response || []);
         setLoading(false);
     }

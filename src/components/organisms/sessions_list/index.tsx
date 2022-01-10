@@ -3,7 +3,7 @@ import { Spinner } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
-import { getAllSessions, Session } from '../../../services/sessions_service';
+import { getTodaySessions, Session } from '../../../services/sessions_service';
 
 import { OutlineCard, SectionHeader } from '../../molecules';
 
@@ -16,8 +16,7 @@ const SessionsList: React.FC = () => {
     const [isLoading, setLoading] = useState<boolean>(true);
 
     async function searchAll() {
-        const response = await getAllSessions();
-        // const response = await getTodaySessions();
+        const response = await getTodaySessions();
         setSessions(response || []);
         setLoading(false);
     }
@@ -48,7 +47,7 @@ const SessionsList: React.FC = () => {
                         return(
                             <OutlineCard
                             leftText={s.tituloFilme}
-                            middleText={`Sala ${s.numSala}`}
+                            middleText={`Sala ${s.numeroSala}`}
                             rightText={s.horarioInicio.substring(0,5)}
                             />
                         )

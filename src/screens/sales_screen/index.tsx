@@ -75,8 +75,8 @@ const SalesScreen: React.FC = () => {
 
 const Relatorio: React.FC = () => {
 
-  const [, setDashboard] = useState<Dashboard>();
-  const [, setLoading] = useState<boolean>(true);
+  const [dashboard, setDashboard] = useState<Dashboard>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
 
@@ -85,46 +85,47 @@ const Relatorio: React.FC = () => {
       setDashboard(await getDashboard());
     }
     getInfo();
-    
+
     setLoading(false);
   }, []);
 
-  return (
+  return loading ?
+    <Spinner />
+    :
     <>
       <InfoCard
-        info="Jurassic World: Domínio"
+        info={dashboard?.filmeMaisAssistido || ''}
         description="filme mais assistido"
       />
       <InfoCard
-        info="Coraline"
+        info={dashboard?.filmeMenosAssistido || ''}
         description="filme menos assistido"
       />
       <InfoCard
-        info="2"
+        info={dashboard?.quantidadeIngressosVendidosNoMes.toString() || ''}
         description="ingressos vendidos no mês"
       />
       <InfoCard
-        info="25"
+        info={dashboard?.quantidadeIngressosVendidosNoTotal.toString() || ''}
         description="ingressos vendidos no total"
       />
       <InfoCard
-        info="342,75"
+        info={dashboard?.reaisFaturadosComAcompanhamentos.toString() || ''}
         description="reais faturados com acompanhamentos"
       />
       <InfoCard
-        info="3597"
+        info={dashboard?.totalAcompanhamentosDisponiveis.toString() || ''}
         description="total de acompanhamentos disponíveis"
       />
       <InfoCard
-        info="20"
+        info={dashboard?.totalFuncionariosCadastrados.toString() || ''}
         description="total de funcionários cadastrados"
       />
       <InfoCard
-        info="20"
+        info={dashboard?.totalClientesCadastrados.toString() || ''}
         description="total de clientes cadastrados"
       />
     </>
-  );
 };
 
 

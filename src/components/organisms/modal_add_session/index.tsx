@@ -2,7 +2,7 @@ import { Combobox, FormField, Spinner, TextInputField } from 'evergreen-ui';
 
 import { Formik } from 'formik';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Button } from '../../atoms';
 
@@ -12,7 +12,7 @@ import ModalAddEmployeProps from './modal_add_session_props';
 
 import styles from './modal_add_session_styles.module.scss';
 
-import { Session } from '../../../services/sessions_service';
+import { postSession, Session, editSession } from '../../../services/sessions_service';
 
 import { Film, getAllFilms } from '../../../services/films_service';
 
@@ -21,29 +21,34 @@ import { getAllRooms, Room } from '../../../services/room_service';
 
 const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () => { }, edit = false, session }) => {
 
-    const values: Session = {
+    const values: Session = useMemo(() => ({
         anoFilme: 0,
         data: '',
         horarioInicio: '',
-        numSala: 0,
+        numeroSala: 0,
         precoInteira: 0,
         quantidadeTotalIngressos: 0,
         tituloFilme: '',
-        precoMeia: 0
-    }
+        precoMeia: 0,
+        numSala:0
+    }), []);
 
 
+    const [film, setFilm] = useState<{ titulo: string, ano: number }>({ titulo: '', ano: 0 });
+    const [room, setRoom] = useState<number>(0);
     const [isLoading, setLoading] = useState<boolean>(true);
     const [films, setfilms] = useState<Film[]>([]);
     const [rooms, setRooms] = useState<Room[]>([]);
-    const [initialValues] = useState<Session>(values);
+    const [initialValues, setInitialValues] = useState<Session>(session || {} as Session);
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     setInitialValues(session || values);
-    //     setLoading(false);
+    useEffect(() => {
+        setLoading(true);
+        setInitialValues(session || values);
+        setFilm({ titulo: session?.tituloFilme || '', ano: session?.anoFilme || 0 });
+        setRoom(session?.numSala || 0)
+        setLoading(false);
 
-    // }, [session, values]);
+    }, [session, values]);
 
     useEffect(() => {
         setLoading(true);
@@ -73,7 +78,10 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                             initialValues={initialValues}
                             onSubmit={async (values) => {
                                 console.log(values);
-                                // edit ? await editRoom(values) : await postRoom(values);
+                                edit ?
+                                    await editSession({ ...values, anoFilme: film?.ano, tituloFilme: film?.titulo, numeroSala: room, numSala: room })
+                                    :
+                                    await postSession({ ...values, anoFilme: film?.ano, tituloFilme: film?.titulo, numeroSala: room, numSala: room });
                                 onClose();
                             }}
                             enableReinitialize
@@ -86,8 +94,9 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                                     <FormField label="Filme" width="100%" isRequired>
                                         <Combobox
                                             width="100%"
+                                            initialSelectedItem={{value: film, label: film.titulo}}
                                             items={films.map((f) => { return { value: { titulo: f.titulo, ano: f.anoDeLancamento }, label: f.titulo } })}
-                                            onChange={selected => console.log(selected.value)}
+                                            onChange={selected => setFilm(selected.value)}
                                             itemToString={item => item ? item.label : ''}
                                             placeholder="Escolha o filme..."
                                         />
@@ -96,8 +105,9 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                                     <FormField label="Sala" width="100%" isRequired>
                                         <Combobox
                                             width="100%"
-                                            items={rooms.map((f) => { return { value: f.numero, label: `Sala ${f.numero} - ${f.tipo}` } })}
-                                            onChange={selected => console.log(selected.value)}
+                                            initialSelectedItem={{value: room, label: `Sala ${room}`}}
+                                            items={rooms.map((f) => { return { value: f.numero, label: `Sala ${f.numero}` } })}
+                                            onChange={selected => setRoom(selected.value)}
                                             itemToString={item => item ? item.label : ''}
                                             placeholder="Escolha a sala..."
                                         />
@@ -115,9 +125,19 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                                     <TextInputField
                                         label="Horário"
                                         placeholder='Digite o horário da sessão... '
-                                        name="horario"
+                                        name="horarioInicio"
                                         required
                                         value={values.horarioInicio}
+                                        onChange={handleChange}
+                                    />
+
+                                    <TextInputField
+                                        label="Preço Inteira"
+                                        placeholder='Digite o preço da sessão... '
+                                        name="precoInteira"
+                                        required
+                                        type="number"
+                                        value={values.precoInteira}
                                         onChange={handleChange}
                                     />
 

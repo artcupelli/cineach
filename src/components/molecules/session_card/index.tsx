@@ -10,100 +10,76 @@ import styles from './session_card_styles.module.scss';
 
 import { OutlineCard } from '..';
 
-import { getFilm } from '../../../services/films_service';
-
 import { Spinner } from 'evergreen-ui';
 
+import { getSession, Session } from '../../../services/sessions_service';
 
-const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, description, year }) => {
+import Icon from '@mdi/react';
+
+import { Icons } from '../../../theme/icons';
+
+
+const SessionCard: React.FC<SessionCardProps> = ({ title, animation = true, url, onDelete = () => { }, onEdit = () => { } }) => {
 
     const [isLoading, setLoading] = useState<boolean>(true);
-    const [filmUrl, setFilmUrl] = useState<string>();
-
+    const [sessions, setSessions] = useState<Session[]>([]);
 
     useEffect(() => {
-        const getFilmUrl = async () => {
-            const response = await getFilm(title, year);
-            setFilmUrl(response?.poster || "");
-            setLoading(false);
-        }
+        setLoading(true);
 
-        getFilmUrl();
-    }, [title, year])
+        async function searchAll() {
+            setSessions(await getSession(title) ?? []);
+        }
+        searchAll();
+
+        setLoading(false);
+    }, [title]);
+
+
+    function formatDate(dateToFormat: string): string {
+        return `${dateToFormat.substring(8, 10)}/${dateToFormat.substring(5, 7)}`;
+    }
 
 
     return (
         <div className={styles['container']}>
             {isLoading ? <Spinner /> :
                 <>
-                    <div className={styles['picture']} style={{ backgroundImage: 'url(' + filmUrl + ')' }}>
+                    <div className={styles['picture']} style={{ backgroundImage: 'url(' + url + ')' }}>
                         <div className={styles['gradient_container']}>
                             <div className={styles['text_container']}>
                                 {isLoading && <Spinner />}
                                 <Subtitle color={Colors.white}>{title}</Subtitle>
-                                <Text>{description}</Text>
+                                <Text>{`Número de sessões: ${sessions.length}`}</Text>
                             </div>
                         </div>
                     </div>
 
                     <div className={styles['sessions_container']}>
-                        <Subtitle light color={Colors.black}>{title + ", " + description}</Subtitle>
+                        <Subtitle light color={Colors.black}>{`${title}`}</Subtitle>
 
-                        <OutlineCard
-                            leftText='3D Legendado'
-                            middleText='Sala 01'
-                            rightText='22:00'
-                        />
-                        <OutlineCard
-                            leftText='2D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='4DX Dublado'
-                            middleText='Sala 01'
-                            rightText='14:00'
-                        />
-                        <OutlineCard
-                            leftText='VIP Legendado'
-                            middleText='Sala 01'
-                            rightText='22:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='VIP Legendado'
-                            middleText='Sala 01'
-                            rightText='22:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
-                        <OutlineCard
-                            leftText='3D Dublado'
-                            middleText='Sala 01'
-                            rightText='21:00'
-                        />
+                        {
+                            sessions.map((s) => {
+                                return (
+                                    <div className={styles['session_card_container']}>
+
+                                        <OutlineCard
+                                            leftText={`Sala ${s.numSala}`}
+                                            middleText={`${formatDate(s.data)}, às ${s.horarioInicio.substring(0, 5)}`}
+                                            rightText={`R$ ${s.precoInteira}`}
+                                        />
+
+                                        <div className={styles['icon_container']} onClick={() => onEdit(s)}>
+                                            <Icon path={Icons.edit} size={1} color={Colors.red} />
+                                        </div>
+
+                                        <div className={styles['icon_container']} onClick={() => onDelete(s)}>
+                                            <Icon path={Icons.trash} size={1} color={Colors.red} />
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </>
             }

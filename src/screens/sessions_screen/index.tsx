@@ -1,4 +1,4 @@
-import { Spinner } from 'evergreen-ui';
+import { Alert, CornerDialog, Spinner } from 'evergreen-ui';
 
 import React, { useEffect, useState } from 'react';
 
@@ -8,7 +8,9 @@ import SessionCard from "../../components/molecules/session_card";
 
 import { ModalAddSession } from '../../components/organisms';
 
-import { getAllSessions, Session } from '../../services/sessions_service';
+import { Film, getAllFilms } from '../../services/films_service';
+
+import { deleteSession, Session } from '../../services/sessions_service';
 
 import { Icons } from '../../theme/icons';
 
@@ -17,23 +19,26 @@ import styles from './sessions_screen_style.module.scss';
 
 const SessionScreen: React.FC = () => {
 
-  const [sessions, setSessions] = useState<Session[]>([]);
+  const [movies, setMovies] = useState<Film[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [added, setAdded] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [editSession, setEditSession] = useState<Session>({} as Session);
+  const [selDeleteSession, setDelSession] = useState<Session>({} as Session);
 
-  async function searchAll() {
-    const response = await getAllSessions();
-    setSessions(response || []);
-    setLoading(false);
-  }
 
   useEffect(() => {
-    searchAll();
-  }, []);
+    setLoading(true);
 
-  function formatDate(dateToFormat: string): string {
-    const date = new Date(dateToFormat);
-    return `${date.getDate()}/${date.getMonth()}`;
-  }
+    async function searchAllMovies() {
+      const response = await getAllFilms();
+      setMovies(response || []);
+    }
+
+    searchAllMovies();
+
+    setLoading(false);
+  }, [added, isModalOpen]);
 
   return (
 
@@ -43,24 +48,53 @@ const SessionScreen: React.FC = () => {
       <Header
         title='Sessões'
         icon={Icons.session}
+        onAdd={() => { setEditSession({} as Session); setModalOpen(true) }}
       />
 
+      <Alert intent="warning" >Caso demore para atualizar, ao editar, adicionar e excluir, recarregue a página.</Alert>
+
+      <CornerDialog
+        onCloseComplete={() => setDelSession({} as Session)}
+        intent="danger"
+        isShown={(Object.keys(selDeleteSession).length !== 0)}
+        confirmLabel='Excluir'
+        title="Deseja mesmo excluir esta sessão?"
+        cancelLabel='Cancelar'
+        onConfirm={async () => {
+
+          await deleteSession(selDeleteSession || {} as Session);
+          setDelSession({} as Session);
+          setAdded(!added)
+
+        }}
+        onCancel={() => setDelSession({} as Session)}
+      >
+        Você deseja mesmo excluir esta sessão? Cuidado! Esta ação não tem volta!
+      </CornerDialog>
+
+
       <ModalAddSession
-        isOpen={true}
+        session={editSession}
+        isOpen={isModalOpen}
+        edit={(Object.keys(editSession).length !== 0)}
+        onClose={() => { setEditSession({} as Session); setModalOpen(false); setAdded(!added) }}
       />
 
       <div className={styles['sessions_container']}>
         {
-          isLoading
+          (isLoading)
             ?
             <Spinner />
             :
-            sessions.map((s) => {
+            movies.map((s) => {
               return (
                 <SessionCard
-                  title={s.tituloFilme}
-                  description={`${formatDate(s.data)} às ${s.horarioInicio.substring(0, 5)}   Sala ${s.numSala}`}
-                  year={s.anoFilme}
+                  title={s.titulo}
+                  year={s.anoDeLancamento}
+                  url={s.poster}
+                  onDelete={(x: Session) => { setDelSession(x) }}
+                  onEdit={(x: Session) => { setEditSession(x); setModalOpen(true) }}
+
                 />
               )
             })
