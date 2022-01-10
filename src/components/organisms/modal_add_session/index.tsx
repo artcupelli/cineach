@@ -118,6 +118,7 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                                         placeholder='Digite a data da sessão... '
                                         name="data"
                                         required
+                                        hint="Deve ser no estilo 'AAAA-MM-DD'"
                                         value={values.data}
                                         onChange={handleChange}
                                     />
@@ -127,6 +128,7 @@ const ModalAddSession: React.FC<ModalAddEmployeProps> = ({ isOpen, onClose = () 
                                         placeholder='Digite o horário da sessão... '
                                         name="horarioInicio"
                                         required
+                                        hint="Deve ser no estilo 'HH:MM:SS'"
                                         value={values.horarioInicio}
                                         onChange={handleChange}
                                     />

@@ -92,7 +92,30 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
         // TICKET
 
         case CartActionsTypes.ADD_TICKET:
-            return { ...state, ingressos: state.ingressos.concat(action.payload), valorTotal: state.valorTotal + (action.payload.precoInteira * 1) }
+
+            indexAux = -1;
+
+            state.ingressos.forEach((p, index) => {
+                if (p.dataSessao === action.payload.dataSessao &&
+                    p.horaInicioSessao === action.payload.horaInicioSessao &&
+                    p.numeroSalaSessao === action.payload.numeroSalaSessao &&
+                    p.meiaEntrada === action.payload.meiaEntrada) {
+                    indexAux = index;
+                }
+            });
+            
+            if (indexAux !== -1) {
+                var ingressosAux = state.ingressos;
+
+                ingressosAux[indexAux].quantidade++;
+
+                return { ...state, ingressos: ingressosAux, valorTotal: state.valorTotal + (action.payload.precoInteira * 1) }
+
+            } else {
+                return { ...state, ingressos: state.ingressos.concat(action.payload), valorTotal: state.valorTotal + (action.payload.precoInteira * 1) }
+
+            }
+            
 
         case CartActionsTypes.REMOVE_TICKET:
             return {
@@ -133,7 +156,7 @@ const reducer = (state: Cart = initialState, action: CartAction): Cart => {
             return { ...state, ingressos: ticketsAux, valorTotal: state.valorTotal - (action.payload.precoInteira * 1) }
 
 
-        case CartActionsTypes.END_SALE: 
+        case CartActionsTypes.END_SALE:
             return initialState;
 
         default:
