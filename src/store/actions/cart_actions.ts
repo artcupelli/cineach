@@ -13,7 +13,6 @@ export interface SaleTicket extends Ticket{
     quantidade: number,
     filme: string,
     precoInteira: number
-
 }
 
 export interface Cart {

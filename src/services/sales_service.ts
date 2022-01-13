@@ -1,5 +1,7 @@
 import { toaster } from 'evergreen-ui';
-import { Cart } from '../store/actions/cart_actions';
+
+import { Cart, SaleProduct, SaleTicket } from '../store/actions/cart_actions';
+
 import GenericService, { ResponseTest } from './generic_service';
 
 import { Client, Employee, getClient, getEmployee } from './people_service';
@@ -66,26 +68,23 @@ export async function getDashboard() {
 
 export async function postSale(c: Cart) {
 
-    const ticketService = new GenericService('/ingressos');
-
     try {
         const response = await salesService.api.post('', { ...c, formaPagamento: 'Crédito' });
         const data = response.status;
+
+        const url = response.headers.location.split('/');
+
         if (data === 201) {
-            const rota = response.headers.location;
-            const aux = rota.split('/');
 
-            const response2 = await salesService.api.post(`${(aux[aux.length - 1])}`, c.acompanhamentos);
+            const id = url.pop();
 
-            if (response2.data === 200) {
-                console.log("OK2")
-                c.ingressos.forEach(async (c1) => {
-                    
-                    await ticketService.api.post('', { ...c1, vendaId: (aux[aux.length - 1]) });
-                    console.log("OK4")
+            if (id) {
+                if (c.acompanhamentos.length > 0) await postSaleProduct(c.acompanhamentos, id);
 
-                });
-                toaster.danger("Compra efetuada");
+                c.ingressos.forEach(async (i) => {
+                    await postTicket(i, id);
+                })
+
             }
 
         }
@@ -97,4 +96,61 @@ export async function postSale(c: Cart) {
         toaster.danger("Erro no cadastro, verifique os campos ou se já há este cadastro!");
     }
 }
+
+export async function postSaleProduct(c: SaleProduct[], id: string) {
+
+
+    try {
+
+        const body = {
+            "vendaAcompanhamentosRequest": c
+        }
+
+        const response = await salesService.api.post(`/${id}`, body);
+
+        if (response.status === 200) {
+            return 200;
+        }
+
+        else {
+            toaster.danger("Erro no ProdutoAcompanhamento");
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export async function postTicket(c: SaleTicket, id: string) {
+
+    const ticketService = new GenericService('/ingressos');
+
+    try {
+
+        var cont = 1;
+        console.log(c.quantidade)
+
+        while (cont <= c.quantidade) {
+            console.log("ok")
+            const body = {
+                ...c,
+                vendaId: id
+            }
+
+            const response = await ticketService.api.post(``, body);
+
+            cont++;
+
+            if (response.status !== 201) {
+                toaster.danger("Erro no Ingresso");
+            }
+
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 

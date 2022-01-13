@@ -34,9 +34,6 @@ export async function getAllClients() {
 
         var returnList: Client[] = data.content;
 
-        (returnList).map(async (c) => (
-            c.telefones = await getPhoneNumber(c.cpf) || []
-        ));
 
         return returnList ?? [];
 
@@ -54,8 +51,6 @@ export async function getClient(cpf: string) {
 
         var client: Client = data;
 
-        client.telefones = await getPhoneNumber(client.cpf) || []
-
         return client;
 
     } catch (error) {
@@ -71,8 +66,6 @@ export async function getEmployee(cpf: string) {
         const data = response.data;
 
         var employee: Employee = data;
-
-        employee.telefones = await getPhoneNumber(employee.cpf) || []
 
         return employee;
 
@@ -128,10 +121,6 @@ export async function postClient(client: Client) {
         const response = await clientService.api.post('', client);
         const data = response.status;
 
-        if (client.telefones !== undefined && client.telefones?.length > 0) {
-            await postPhoneNumber(client.telefones, client.cpf);
-        }
-
         if (data === 201) {
             toaster.success("Funcionário cadastrado com sucesso!")
         }
@@ -170,9 +159,6 @@ export async function getAllEmployees() {
         const response = await employeeService.api.get('?size=200');
         const data: ResponseTest = response.data;
         var returnList: Employee[] = data.content;
-
-        (returnList).map(async (c) => (
-            c.telefones = await getPhoneNumber(c.cpf) || []));
 
         return returnList ?? [];
 
@@ -216,44 +202,6 @@ export async function deleteClient(cpf: string): Promise<any> {
 
     } catch (error) {
         toaster.danger("Erro na exclusão, tente novamente mais tarde!");
-    }
-
-}
-
-
-export async function getPhoneNumber(cpf: string) {
-
-    const phoneService = new GenericService('/telefones/cpf');
-
-    try {
-        const response = await phoneService.api.get(`/${cpf}`);
-        const data: ResponseTest = response.data;
-
-        var returnList: string[] = [];
-
-        (data.content as Phone[]).map((p) => (
-            returnList.push(p.numero)));
-
-        return returnList;
-
-    } catch (error) {
-        console.log(error);
-    }
-
-}
-
-
-export async function postPhoneNumber(phones: string[], cpf: string) {
-
-    const phoneService = new GenericService('/telefones');
-    
-    try {
-        phones.forEach(async (p) => {
-            await phoneService.api.post(``, {cpf: cpf.toString(), numero: p } as Phone);
-        });
-
-    } catch (error) {
-        console.log(error);
     }
 
 }
